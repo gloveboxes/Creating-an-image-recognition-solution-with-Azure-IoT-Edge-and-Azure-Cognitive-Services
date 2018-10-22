@@ -8,7 +8,7 @@
             }, 
             "version": "0.1.1025"
         }, 
-        "repository": "localhost:5000/image-classifier-service"
+        "repository": "glovebox/image-classifier-service"
     }, 
     "description": "", 
     "language": "python"

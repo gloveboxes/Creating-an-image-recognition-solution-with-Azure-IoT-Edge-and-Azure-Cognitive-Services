@@ -117,21 +117,25 @@ Follow these steps to export your Custom Vision project model.
 
 ## 3.3. Azure Speech Services
 
-[Azure Speech services](https://azure.microsoft.com/en-au/services/cognitive-services/speech-services/) supports both speech to text and text to speech. For this solution I'm using the text to speech F0 free tier which is limited to 5 million characters per month. You'll need to create the service for your unique key to use for this app.
+[Azure Speech services](https://azure.microsoft.com/en-au/services/cognitive-services/speech-services/) supports both speech to text and text to speech. For this solution, I'm using the text to speech F0 free tier which is limited to 5 million characters per month. You'll need to create the service for your unique key to use for this app.
 
 # 4. How to install and run the solution
 
 1. Clone this GitHub
 
    ```bash
-    
+    git....
    ```
 
-2. [Deploy your first IoT Edge module to a Linux x64 device](https://docs.microsoft.com/en-us/azure/iot-edge/quickstart-linux)
+2. Install the Azure IoT Edge runtime on your Linux desktop or device (eg Raspberry Pi).
 
-3. Install Visual Studio Code along with IoT Edge Extension
+    Follow the instructions to [Deploy your first IoT Edge module to a Linux x64 device](https://docs.microsoft.com/en-us/azure/iot-edge/quickstart-linux).
+
+3. Install the following software development tools.
+
+    1. [Visual Studio Code](https://code.visualstudio.com/)
+    2. The following Visual Studio Code Extensions
+        - [Azure IoT Edge](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-edge)
+        - [JSON Tools](https://marketplace.visualstudio.com/items?itemName=eriklynd.json-tools) useful for modifying the "Create Options" for a module.
 
 4. Create
-
-
-
