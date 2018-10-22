@@ -19,7 +19,11 @@
     - [3.3. Azure Speech Services](#33-azure-speech-services)
 - [4. How to install, build and deploy the solution](#4-how-to-install-build-and-deploy-the-solution)
     - [4.1. Understanding the Project Structure](#41-understanding-the-project-structure)
-    - [Building the Solution](#building-the-solution)
+    - [4.2. Building the Solution](#42-building-the-solution)
+    - [4.3. Deploying the Solution](#43-deploying-the-solution)
+    - [4.4. Monitoring the Solution on the Device](#44-monitoring-the-solution-on-the-device)
+    - [4.5. Monitoring the Solution from the Azure IoT Edge Blade](#45-monitoring-the-solution-from-the-azure-iot-edge-blade)
+- [5. Fini](#5-fini)
 
 <!-- /TOC -->
 
@@ -119,7 +123,7 @@ Follow these steps to export your Custom Vision project model.
 
 ## 3.3. Azure Speech Services
 
-[Azure Speech services](https://azure.microsoft.com/en-au/services/cognitive-services/speech-services/) supports both speech to text and text to speech. For this solution, I'm using the text to speech F0 free tier which is limited to 5 million characters per month. You'll need to create the service for your unique key to use for this app.
+[Azure Speech services](https://azure.microsoft.com/en-au/services/cognitive-services/speech-services/) supports both "speech to text" and "text to speech". For this solution, I'm using the text to speech F0 free tier which is limited to 5 million characters per month. You'll need to create the service for your unique key to use for this app.
 
 # 4. How to install, build and deploy the solution
 
@@ -154,7 +158,7 @@ Follow these steps to export your Custom Vision project model.
 
 ## 4.1. Understanding the Project Structure
 
-The following describe the highlighted sections of the project.
+The following describes the highlighted sections of the project.
 
 1. There are two modules: CameraCaptureOpenCV and ImageClassifierService.
 
@@ -168,7 +172,7 @@ The following describe the highlighted sections of the project.
 
 ![visual studio code project structure](docs/visual-studio-code-open-project.png)
 
-## Building the Solution
+## 4.2. Building the Solution
 
 You need to ensure the image you plan to build matches the target processor architecture specified in the deployment.template.json file.
 
@@ -189,21 +193,34 @@ You need to ensure the image you plan to build matches the target processor arch
 
     ![docker build and push](docs/solution-build-push-docker.png)
 
-4. Finally when the Docker Build and Push process has completed select the Azure IoT Hub device you want to deploy the solution to. Right mouse click the deployment.json file located in the config folder and select the target device.
+## 4.3. Deploying the Solution
 
-    ![deploy to device](docs/deploy-to-device.png)
+Wen the Docker Build and Push process has completed select the Azure IoT Hub device you want to deploy the solution to. Right mouse click the deployment.json file located in the config folder and select the target device.
 
-5. Monitor the IoT Edge deployment. Depending on the device and network speed the IoT Edge Runtime will now pull and then start the module images. You can monitor with the following command.
+   ![deploy to device](docs/deploy-to-device.png)
+
+## 4.4. Monitoring the Solution on the Device
+
+Once the solution has been deployed you can monitor its progress using the ```eotedge list``` command.
 
     ```bash
     watch iotedge list
     ```
-6. You can also monitor the state of the Azure IoT Edge module from the Azure IoT Hub blade on the [Azure Portal](http://portal.azure.com).
 
-    ![azure iot edge devices](docs/azure-iotedge-monitoring.png)
+   ![watch iotedge list](docs/iotedge-list.png)
 
-    Click on the device from the Azure IoT Edge blade to view more details about the modules  running on the device.
+## 4.5. Monitoring the Solution from the Azure IoT Edge Blade
 
-    ![azure iot edge device details](docs/azure-portal-iotedge-device-details.png)
+You can monitor the state of the Azure IoT Edge module from the Azure IoT Hub blade on the [Azure Portal](http://portal.azure.com).
 
-Congratulations you have deployed your first Azure IoT Edge Solution
+   ![azure iot edge devices](docs/azure-iotedge-monitoring.png)
+
+   Click on the device from the Azure IoT Edge blade to view more details about the modules  running on the device.
+
+   ![azure iot edge device details](docs/azure-portal-iotedge-device-details.png)
+
+# 5. Fini
+
+Congratulations you have deployed your first Azure IoT Edge Solution!
+
+![congratulations](docs/congratulations.jpg)
