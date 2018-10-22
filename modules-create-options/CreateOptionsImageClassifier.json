@@ -1,0 +1,11 @@
+{
+    "HostConfig": {
+        "PortBindings": {
+            "3000/tcp": [
+                {
+                    "HostPort": "3000"
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,4 @@
+numpy
+azure-iothub-device-client==1.4.0
+requests 
+ptvsd==3.0.0

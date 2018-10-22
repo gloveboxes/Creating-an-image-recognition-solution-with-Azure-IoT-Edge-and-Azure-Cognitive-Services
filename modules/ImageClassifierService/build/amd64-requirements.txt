@@ -1,0 +1,6 @@
+tensorflow
+pillow
+numpy
+flask
+ptvsd==3.0.0
+

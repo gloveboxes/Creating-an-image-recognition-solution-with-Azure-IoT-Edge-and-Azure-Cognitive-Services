@@ -1,0 +1,9 @@
+# azure-iothub-device-client==1.4.0.0b0
+azure-iothub-device-client==1.4.0
+numpy
+opencv-python
+requests
+ptvsd==4.1.1a11
+pyaudio 
+wave 
+git+https://github.com/westparkcom/Python-Bing-TTS.git

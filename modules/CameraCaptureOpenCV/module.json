@@ -1,0 +1,15 @@
+{
+    "$schema-version": "0.0.1", 
+    "image": {
+        "tag": {
+            "platforms": {
+                "amd64": "./amd64.Dockerfile", 
+                "arm32v7": "./arm32v7-2.Dockerfile"
+            }, 
+            "version": "0.1.8250"
+        }, 
+        "repository": "localhost:5000/camera-capture-opencv"
+    }, 
+    "description": "", 
+    "language": "python"
+}
