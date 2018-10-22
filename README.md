@@ -1,4 +1,4 @@
-|Author|Dave Glover, Microsoft Australia|
+|Author|[Dave Glover](https://developer.microsoft.com/en-us/advocates/dave-glover), Microsoft Cloud Developer Advocate |
 |----|---|
 |Solution| Azure Machine Learning, Image Classification & Intelligent Edge Devices|
 |Platform| [Azure IoT Edge](https://docs.microsoft.com/en-us/azure/iot-edge/)|
@@ -23,7 +23,7 @@
     - [4.3. Deploying the Solution](#43-deploying-the-solution)
     - [4.4. Monitoring the Solution on the Device](#44-monitoring-the-solution-on-the-device)
     - [4.5. Monitoring the Solution from the Azure IoT Edge Blade](#45-monitoring-the-solution-from-the-azure-iot-edge-blade)
-- [5. Fini](#5-fini)
+- [5. Done!](#5-done)
 
 <!-- /TOC -->
 
@@ -219,7 +219,7 @@ You can monitor the state of the Azure IoT Edge module from the Azure IoT Hub bl
 
    ![azure iot edge device details](docs/azure-portal-iotedge-device-details.png)
 
-# 5. Fini
+# 5. Done!
 
 Congratulations you have deployed your first Azure IoT Edge Solution!
 
