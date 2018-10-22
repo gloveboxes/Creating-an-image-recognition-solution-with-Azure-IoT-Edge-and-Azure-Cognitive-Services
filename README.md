@@ -18,6 +18,7 @@
     - [3.2. Exporting an Azure Custom Vision Model](#32-exporting-an-azure-custom-vision-model)
     - [3.3. Azure Speech Services](#33-azure-speech-services)
 - [4. How to install and run the solution](#4-how-to-install-and-run-the-solution)
+    - [Understanding the Project Structure](#understanding-the-project-structure)
 
 <!-- /TOC -->
 
@@ -138,4 +139,16 @@ Follow these steps to export your Custom Vision project model.
         - [Azure IoT Edge](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-edge)
         - [JSON Tools](https://marketplace.visualstudio.com/items?itemName=eriklynd.json-tools) useful for modifying the "Create Options" for a module.
 
-4. Create
+4. Open the IoT Edge solution you cloned to your local machine and expand the modules section.
+
+## Understanding the Project Structure
+
+The following describe the highlighted sections of the project.
+
+1. There are two modules: CameraCaptureOpenCV and ImageClassifierService.
+
+2. The module.json file defines the Docker build process, the module version, and your docker repository.
+
+3. The deployment.template.json file is used by the build process to create the [Deployment Manifest](https://docs.microsoft.com/en-us/azure/iot-edge/module-composition).
+
+![visual studio code project structure](docs/visual-studio-code-open-project.png)

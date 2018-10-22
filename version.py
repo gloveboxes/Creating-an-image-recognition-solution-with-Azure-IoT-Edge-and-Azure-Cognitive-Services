@@ -62,7 +62,5 @@ def updateVersion(moduleName):
 
 dirs = listdir("modules")
 
-# updateVersion("FakeFlowers")
-
 for d in dirs:
     updateVersion(d)
