@@ -17,8 +17,9 @@
     - [3.1. Creating the Fruit Classification Model](#31-creating-the-fruit-classification-model)
     - [3.2. Exporting an Azure Custom Vision Model](#32-exporting-an-azure-custom-vision-model)
     - [3.3. Azure Speech Services](#33-azure-speech-services)
-- [4. How to install and run the solution](#4-how-to-install-and-run-the-solution)
-    - [Understanding the Project Structure](#understanding-the-project-structure)
+- [4. How to install, build and deploy the solution](#4-how-to-install-build-and-deploy-the-solution)
+    - [4.1. Understanding the Project Structure](#41-understanding-the-project-structure)
+    - [Building the Solution](#building-the-solution)
 
 <!-- /TOC -->
 
@@ -120,7 +121,7 @@ Follow these steps to export your Custom Vision project model.
 
 [Azure Speech services](https://azure.microsoft.com/en-au/services/cognitive-services/speech-services/) supports both speech to text and text to speech. For this solution, I'm using the text to speech F0 free tier which is limited to 5 million characters per month. You'll need to create the service for your unique key to use for this app.
 
-# 4. How to install and run the solution
+# 4. How to install, build and deploy the solution
 
 1. Clone this GitHub
 
@@ -138,17 +139,71 @@ Follow these steps to export your Custom Vision project model.
     2. The following Visual Studio Code Extensions
         - [Azure IoT Edge](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-edge)
         - [JSON Tools](https://marketplace.visualstudio.com/items?itemName=eriklynd.json-tools) useful for modifying the "Create Options" for a module.
+    3. [Docker Community Edition](https://docs.docker.com/install/) on your development machine
+    4. If you plan to target Raspberry Pi 2, 3, or 3+ and you are developing on Linux you need to enable cross compiling from Intel to arm32v7. After installing Docker run the following command. See [How to Build ARM Docker Images on Intel host](http://www.hotblackrobotics.com/en/blog/2018/01/22/docker-images-arm/) for more details.
+        ```bash
+        docker run --rm --privileged multiarch/qemu-user-static:register --reset
+        ``` 
+    5. Setup a local Docker registry for prototyping and testing purposes. It will significantly turn around time for coding, deploying and testing.
+
+        ```bash
+        docker run -d -p 5000:5000 --restart always --name registry registry:2
+        ```
 
 4. Open the IoT Edge solution you cloned to your local machine and expand the modules section.
 
-## Understanding the Project Structure
+## 4.1. Understanding the Project Structure
 
 The following describe the highlighted sections of the project.
 
 1. There are two modules: CameraCaptureOpenCV and ImageClassifierService.
 
-2. The module.json file defines the Docker build process, the module version, and your docker repository.
+2. The module.json file defines the Docker build process, the module version, and your docker repository. An update to the module version number is what triggers the Azure IoT Edge runtime to pull down a new version on a module.
 
-3. The deployment.template.json file is used by the build process to create the [Deployment Manifest](https://docs.microsoft.com/en-us/azure/iot-edge/module-composition).
+3. The deployment.template.json file is used by the build process, it describes what modules will form the solution, message routes and what version of the IoT Edge runtime components the solution targets.
+
+4. The deployment.json file is generated from the deployment.template.json and is the [Deployment Manifest](https://docs.microsoft.com/en-us/azure/iot-edge/module-composition)
+
+5. The version.py is a helper app you can run on your development machine that updates the version number of each module. Useful as a change in the version number is what triggers Azure IoT Edge runtime to pull the updated module and it is easy to forgot to change the version number:)
 
 ![visual studio code project structure](docs/visual-studio-code-open-project.png)
+
+## Building the Solution
+
+You need to ensure the image you plan to build matches the target processor architecture specified in the deployment.template.json file.
+
+1. Specify your Docker repository in the module.json file for each module. If pushing the image to a local Docker repository the specify localhost:5000. For example:-
+
+    ```json
+    "repository": "localhost:5000/camera-capture-opencv"
+    ```
+
+2. Confirm processor architecture you plan to build for.
+    1. Open the **deployment.template.json** file
+    2. Under settings for the modules there is an image property that ends with **amd64**. This maps to the Platforms collecting in the **module.json** file for each module, which in turn maps to the Dockerfile to use for the build process. So leave as **amd64** or change to **arm32v7** depending on the platform you are targeting.
+
+    ```json
+    "image": "${MODULES.ImageClassifierService.amd64}"
+    ```
+3. Next Build and Push the solution to Docker by right mouse clicking the deployment.template.json file and select "**Build and Push IoT Edge Solution**". The first time you build will likely be slow as Docker needs to pull the base layers. If you are cross compiling to arm32v7 then the first time it will be very slow as OpenCV and Python requirements need to be compiled. On a fast Intel i7-8750H processor cross compiling will take approximately 40 minutes.
+
+    ![docker build and push](docs/solution-build-push-docker.png)
+
+4. Finally when the Docker Build and Push process has completed select the Azure IoT Hub device you want to deploy the solution to. Right mouse click the deployment.json file located in the config folder and select the target device.
+
+    ![deploy to device](docs/deploy-to-device.png)
+
+5. Monitor the IoT Edge deployment. Depending on the device and network speed the IoT Edge Runtime will now pull and then start the module images. You can monitor with the following command.
+
+    ```bash
+    watch iotedge list
+    ```
+6. You can also monitor the state of the Azure IoT Edge module from the Azure IoT Hub blade on the [Azure Portal](http://portal.azure.com).
+
+    ![azure iot edge devices](docs/azure-iotedge-monitoring.png)
+
+    Click on the device from the Azure IoT Edge blade to view more details about the modules  running on the device.
+
+    ![azure iot edge device details](docs/azure-portal-iotedge-device-details.png)
+
+Congratulations you have deployed your first Azure IoT Edge Solution
