@@ -29,17 +29,17 @@
 
 # 1. Image Classification with Azure IoT Edge
 
-The scenarios for this Machine Learning Image Classification solution include self-service shopping for vision impaired people or someone new to a country who is unfamiliar with local product names.
+There are lots of applications for image recognition but what I had in mind when developing this application was a solution for vision impaired people scanning fruit and vegetables at a self service check out.
 
 ## 1.1. Solution Overview
 
-At a high level, the solution takes a photo of a piece of fruit, gets the name of the fruit from a trained image classifier, converts the name of the fruit to speech and plays back the name of the fruit on the attached speaker.
+The system identifies the item scanned using a pre trained machine learning model, tells the person what they have just scanned, then sends a record of the transaction to a central inventory tracking system.
 
-The solution runs of [Azure IoT Edge](#what-is-azure-iot-edge) and consists of a number of services.
+The solution runs on [Azure IoT Edge](#what-is-azure-iot-edge) and consists of a number of services.
 
-1. The **Camera Capture Module** is responsible for capturing an image from the camera, calling the Image Classification REST API, then calling the Text to Speech REST API and finally playing bask in the classified image label on the speaker.  
+1. The **Camera Capture Module** is responsible for scanning items using a camera. It then calls the Image Classification module to identify the item, a call is then made to the "Text to Speech" module to convert item label to speech, and the name of the item scanned is played on the attached speaker.  
 
-2. The **Image Classification Module** is responsible for classifying the image that was passed to it from the camera capture module.
+2. The **Image Classification Module** runs Tensorflow machine learning model that has been trained with images of fruit. It is responsible for classifying the scanned items.
 
 3. The **Text to Speech Module** passes the text label return from the image classifier module and converts to speech using the Azure Speech Service. As an optimization, this module also caches speech data.
 
