@@ -41,17 +41,17 @@ The solution runs on [Azure IoT Edge](#what-is-azure-iot-edge) and consists of a
 
 2. The **Image Classification Module** runs Tensorflow machine learning model that has been trained with images of fruit. It is responsible for classifying the scanned items.
 
-3. The **Text to Speech Module** passes the text label return from the image classifier module and converts to speech using the Azure Speech Service. As an optimization, this module also caches speech data.
+3. The **Text to Speech Module** converts the name of the item scanned from text to speech using Azure Speech Services.
 
-4. USB Camera for Image Capture is used for image capture.
+4. A USB Camera is used to capture images of items to be purchased.
 
 5. A Speaker for text to Speech playback.
 
-6. I used the free tier of **Azure IoT Hub** for managing, deploying and reporting the IoT Edge device.
+6. **Azure IoT Hub** (Free tier) is used for managing, deploying and reporting Azure IoT Edge devices running the solution.
 
-7. The **Azure Speech to Text service** free tier was used for text to speech services.
+7. **Azure Speech Services** (free tier) is used to generate very natural speech telling the shopper what they have just scanned.
 
-8. And **Azure Custom Vision** was used to build the Image Classification model that forms the basis of the Image Classification module.
+8. **Azure Custom Vision service** was used to build the fruit model used for image classification.
 
 ![IoT Edge Solution Architecture](docs/Architecture.jpg)
 
