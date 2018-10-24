@@ -29,25 +29,25 @@
 
 # 1. Image Classification with Azure IoT Edge
 
-There are lots of applications for image recognition but what I had in mind when developing this application was a solution for vision impaired people scanning fruit and vegetables at a self service check out.
+There are lots of applications for image recognition but what I had in mind when developing this application was a solution for vision impaired people scanning fruit and vegetables at a self-service check out.
 
 ## 1.1. Solution Overview
 
-The system identifies the item scanned against a pre trained machine learning model, tells the person what they have just scanned, then sends a record of the transaction to a central inventory system.
+The system identifies the item scanned against a pre-trained machine learning model, tells the person what they have just scanned, then sends a record of the transaction to a central inventory system.
 
 The solution runs on [Azure IoT Edge](#what-is-azure-iot-edge) and consists of a number of services.
 
-1. The **Camera Capture Module** is responsible for scanning items using a camera. It then calls the Image Classification module to identify the item, a call is then made to the "Text to Speech" module to convert item label to speech, and the name of the item scanned is played on the attached speaker.  
+1. The **Camera Capture Module** handles scanning items using a camera. It then calls the Image Classification module to identify the item, a call is then made to the "Text to Speech" module to convert item label to speech, and the name of the item scanned is played on the attached speaker.  
 
-2. The **Image Classification Module** runs a Tensorflow machine learning model that has been trained with images of fruit. It is responsible for classifying the scanned items.
+2. The **Image Classification Module** runs a Tensorflow machine learning model that has been trained with images of fruit. It handles classifying the scanned items.
 
 3. The **Text to Speech Module** converts the name of the item scanned from text to speech using Azure Speech Services.
 
-4. A USB Camera is used to capture images of items to be purchased.
+4. A USB Camera is used to capture images of items to be bought.
 
 5. A Speaker for text to Speech playback.
 
-6. **Azure IoT Hub** (Free tier) is used for managing, deploying and reporting Azure IoT Edge devices running the solution.
+6. **Azure IoT Hub** (Free tier) is used for managing, deploying, and reporting Azure IoT Edge devices running the solution.
 
 7. **Azure Speech Services** (free tier) is used to generate very natural speech telling the shopper what they have just scanned.
 
@@ -71,7 +71,7 @@ The main components for an IoT Edge solution are:-
 
 5. Create Options. Create Options tell the Docker runtime what options to start the module with. For example, you may wish to open ports for REST APIs or debugging ports, define paths to devices such as a USB Camera, set environment variables, or enable privilege mode for certain hardware operations. For more information see the [Docker API](https://docs.docker.com/engine/api/latest/) documentation.
 
-6. [Deployment Manifest](https://docs.microsoft.com/en-us/azure/iot-edge/module-composition). The Deployment Manifest pulls everything together and tells the IoT Edge runtime what modules to deploy, from where, plus what message routes to setup, and what create options to start each module with.
+6. [Deployment Manifest](https://docs.microsoft.com/en-us/azure/iot-edge/module-composition). The Deployment Manifest pulls everything together and tells the IoT Edge runtime what modules to deploy, from where, plus what message routes to set up, and what create options to start each module with.
 
 ## 2.1. Azure IoT Edge in Action
 
@@ -79,13 +79,13 @@ The main components for an IoT Edge solution are:-
 
 ## 2.2. Solution Architectural Considerations
 
-So with that overview of Azure IoT Edge here were my initial considerations and constraints for the solution.
+So, with that overview of Azure IoT Edge here were my initial considerations and constraints for the solution.
 
 1. The solution should scale from a Raspberry Pi (running Raspbian Linux) on ARM32v7, to my desktop development environment, to an industrial capable IoT Edge device such as those found in the [Certified IoT Edge Catalog](https://catalog.azureiotsolutions.com/).
 
-2. The solution requires camera input, I used a USB Webcam for image capture as it was supported across all target devices.
+2. The solution needs camera input, I used a USB Webcam for image capture as it was supported across all target devices.
 
-3. The camera capture module required Docker USB device pass-through (not supported by Docker on Windows) so that plus targeting Raspberry Pi meant that I need to target Azure IoT Edge on Linux.
+3. The camera capture module needed Docker USB device pass-through (not supported by Docker on Windows) so that plus targeting Raspberry Pi meant that I need to target Azure IoT Edge on Linux.
 
 4. I wanted my developer experience to mirror the devices I was targeting plus I needed Docker support for the USB webcam, so I developed the solution on my Ubuntu 18.04 developer desktop. See my [Ubuntu for Azure Developers](https://gloveboxes.github.io/Ubuntu-for-Azure-Developers/) guide.
 
@@ -119,7 +119,7 @@ Follow these steps to export your Custom Vision project model.
 
    ![choose docker](docs/export-choose-your-platform.png)
 
-4. Download the docker file and unzip and you have a ready-made Docker solution containing a Python Flask REST API. This was how I created the Azure IoT Edge Image Classification module in this solution. Too easy:)
+4. Download the docker file and unzip and you have a ready-made Docker solution with a Python Flask REST API. This was how I created the Azure IoT Edge Image Classification module in this solution. Too easy:)
 
 ## 3.3. Azure Speech Services
 
@@ -159,7 +159,7 @@ The following describes the highlighted sections of the project.
 
 4. The deployment.json file is generated from the deployment.template.json and is the [Deployment Manifest](https://docs.microsoft.com/en-us/azure/iot-edge/module-composition)
 
-5. The version.py in the project root folder is a helper app you can run on your development machine that updates the version number of each module. Useful as a change in the version number is what triggers Azure IoT Edge runtime to pull the updated module and it is easy to forgot to change the module version numbers:)
+5. The version.py in the project root folder is a helper app you can run on your development machine that updates the version number of each module. Useful as a change in the version number is what triggers Azure IoT Edge runtime to pull the updated module and it is easy to forget to change the module version numbers:)
 
 ![visual studio code project structure](docs/visual-studio-code-open-project.png)
 
@@ -167,7 +167,7 @@ The following describes the highlighted sections of the project.
 
 You need to ensure the image you plan to build matches the target processor architecture specified in the deployment.template.json file.
 
-1. Specify your Docker repository in the module.json file for each module. For development and testing it is faster to push images to a local docker registry 
+1. Specify your Docker repository in the module.json file for each module. For development and testing, it is faster to push images to a local docker registry
 2. Setup a local Docker registry for prototyping and testing purposes. It will significantly speed up the development, deployment and test cycles.
 
         ```bash
@@ -179,7 +179,7 @@ You need to ensure the image you plan to build matches the target processor arch
     ```
 4. Confirm processor architecture you plan to build for.
     1. Open the **deployment.template.json** file
-    2. Under settings for the modules there is an image property that ends with **amd64**. This maps to the Platforms collecting in the **module.json** file for each module, which in turn maps to the Dockerfile to use for the build process. So leave as **amd64** or change to **arm32v7** depending on the platform you are targeting.
+    2. Under settings for each module there is an image property that ends with **amd64**. This maps to the Platforms collecting in the **module.json** file for each module, which in turn maps to the Dockerfile to use for the build process. So leave as **amd64** or change to **arm32v7** depending on the platform you are targeting.
 
     ```json
     "image": "${MODULES.ImageClassifierService.amd64}"
@@ -188,19 +188,19 @@ You need to ensure the image you plan to build matches the target processor arch
     ```bash
     docker run --rm --privileged multiarch/qemu-user-static:register --reset
     ```
-6. Next Build and Push the solution to Docker by right mouse clicking the deployment.template.json file and select "**Build and Push IoT Edge Solution**". The first build will be slow as Docker needs to pull the base layers to your local machine. If you are cross compiling to arm32v7 then the first time it will be very slow as OpenCV and Python requirements need to be compiled. On a fast Intel i7-8750H processor cross compiling this solution will take approximately 40 minutes.
+6. Next, Build and Push the solution to Docker by right mouse clicking the deployment.template.json file and select "**Build and Push IoT Edge Solution**". The first build will be slow as Docker needs to pull the base layers to your local machine. If you are cross compiling to arm32v7 then the first build will be very slow as OpenCV and Python requirements need to be compiled. On a fast Intel i7-8750H processor cross compiling this solution will take approximately 40 minutes.
 
     ![docker build and push](docs/solution-build-push-docker.png)
 
 ## 4.3. Deploying the Solution
 
-When the Docker Build and Push process has completed select the Azure IoT Hub device you want to deploy the solution to. Right mouse click the deployment.json file located in the config folder and select the target device from the drop down list.
+When the Docker Build and Push process has completed select the Azure IoT Hub device you want to deploy the solution to. Right mouse click the deployment.json file found in the config folder and select the target device from the drop-down list.
 
    ![deploy to device](docs/deploy-to-device.png)
 
 ## 4.4. Monitoring the Solution on the IoT Edge Device
 
-Once the solution has been deployed you can monitor its progress on the IoT Edge device itself using the ```eotedge list``` command.
+Once the solution has been deployed you can monitor its progress on the IoT Edge device itself using the ```iotedge list``` command.
 
     ```bash
     iotedge list
@@ -220,7 +220,7 @@ You can monitor the state of the Azure IoT Edge module from the Azure IoT Hub bl
 
 # 5. Done!
 
-When the solution is fully deployed to the IoT Edge device the system will start telling you what items it thinks have been scanned.
+When the solution is finally deployed to the IoT Edge device the system will start telling you what items it thinks have been scanned.
 
 Congratulations you have deployed your first Azure IoT Edge Solution!
 
