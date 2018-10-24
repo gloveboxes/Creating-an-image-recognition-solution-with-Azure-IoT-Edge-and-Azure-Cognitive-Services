@@ -45,7 +45,7 @@ The solution runs on [Azure IoT Edge](#what-is-azure-iot-edge) and consists of a
 
 4. A USB Camera is used to capture images of items to be bought.
 
-5. A Speaker for text to Speech playback.
+5. A Speaker for text to speech playback.
 
 6. **Azure IoT Hub** (Free tier) is used for managing, deploying, and reporting Azure IoT Edge devices running the solution.
 
@@ -65,13 +65,13 @@ The main components for an IoT Edge solution are:-
 
 2. [Modules](https://docs.microsoft.com/en-us/azure/iot-edge/iot-edge-modules). Modules are the unit of deployment. Modules are docker images pulled from a registry such as the [Azure Container Registry](https://azure.microsoft.com/en-au/services/container-registry/), or [Docker Hub](https://hub.docker.com/). Modules can be custom developed, built as [Azure Functions](https://docs.microsoft.com/en-us/azure/iot-edge/tutorial-deploy-function), or as exported services from [Azure Custom Vision](https://docs.microsoft.com/en-us/azure/iot-edge/tutorial-deploy-stream-analytics), [Azure Machine Learning](https://docs.microsoft.com/en-us/azure/iot-edge/tutorial-deploy-machine-learning), or [Azure Stream Analytics](https://docs.microsoft.com/en-us/azure/iot-edge/tutorial-deploy-stream-analytics).
 
-3. Routes. Routes define message paths between modules and with IoT Hub.
+3. Routes. Routes define message paths between modules and with Azure IoT Hub.
 
 4. Properties. You can set "desired" properties for a module from Azure IoT Hub. For example, you might want to set a threshold property for a temperature alert.
 
 5. Create Options. Create Options tell the Docker runtime what options to start the module with. For example, you may wish to open ports for REST APIs or debugging ports, define paths to devices such as a USB Camera, set environment variables, or enable privilege mode for certain hardware operations. For more information see the [Docker API](https://docs.docker.com/engine/api/latest/) documentation.
 
-6. [Deployment Manifest](https://docs.microsoft.com/en-us/azure/iot-edge/module-composition). The Deployment Manifest pulls everything together and tells the IoT Edge runtime what modules to deploy, from where, plus what message routes to set up, and what create options to start each module with.
+6. [Deployment Manifest](https://docs.microsoft.com/en-us/azure/iot-edge/module-composition). The Deployment Manifest pulls everything together and tells the Azure IoT Edge runtime what modules to deploy, from where, plus what message routes to set up, and what create options to start each module with.
 
 ## 2.1. Azure IoT Edge in Action
 
@@ -97,9 +97,9 @@ So, with that overview of Azure IoT Edge here were my considerations and constra
 
 ## 3.1. Creating the Fruit Classification Model
 
-The [Azure Custom Vision](https://customvision.ai/) service is a simple way to create an image classification machine learning model without having to be a data science or machine learning expert. You simply upload multiple collections of labelled images. For example, you could upload a collection of bananas images and label them as 'banana'.
+The [Azure Custom Vision](https://customvision.ai/) service is a simple way to create an image classification machine learning model without having to be a data science or machine learning expert. You simply upload multiple collections of labelled images. For example, you could upload a collection of banana images and label them as 'banana'.
 
-To create your own classification model read [How to build a classifier with Custom Vision](https://docs.microsoft.com/en-us/azure/cognitive-services/custom-vision-service/getting-started-build-a-classifier) for more information. It is important to have a good variety of labelled images so be sure to read [How to improve your classifier](https://docs.microsoft.com/en-us/azure/cognitive-services/custom-vision-service/getting-started-improving-your-classifier) for more information.
+To create your own classification model read [How to build a classifier with Custom Vision](https://docs.microsoft.com/en-us/azure/cognitive-services/custom-vision-service/getting-started-build-a-classifier) for more information. It is important to have a good variety of labelled images so be sure to read [How to improve your classifier](https://docs.microsoft.com/en-us/azure/cognitive-services/custom-vision-service/getting-started-improving-your-classifier).
 
 ## 3.2. Exporting an Azure Custom Vision Model
 
@@ -123,7 +123,13 @@ Follow these steps to export your Custom Vision project model.
 
 ## 3.3. Azure Speech Services
 
-[Azure Speech services](https://azure.microsoft.com/en-au/services/cognitive-services/speech-services/) supports both "speech to text" and "text to speech". For this solution, I'm using the text to speech F0 free tier which is limited to 5 million characters per month. You'll need to create the service for your unique key to use for this app.
+[Azure Speech services](https://azure.microsoft.com/en-au/services/cognitive-services/speech-services/) supports both "speech to text" and "text to speech". For this solution, I'm using the text to speech (F0) free tier which is limited to 5 million characters per month. You will need to add the Speech service using the Azure Portal and "Grab your key" from the service.
+
+![azure speech service](docs/speech-service.png)
+
+Open the deployment.template.json file and update the BingKey with the key you copied from the Azure Speech service.
+
+![speech key](docs/speech-key.png)
 
 # 4. How to install, build and deploy the solution
 
@@ -155,7 +161,7 @@ The following describes the highlighted sections of the project.
 
 2. The module.json file defines the Docker build process, the module version, and your docker registry. Updating the version number, pushing the updated module to an image registry, and updating the deployment manifest for an edge device triggers the Azure IoT Edge runtime to pull down the new module to the edge device.
 
-3. The deployment.template.json file is used by the build process. It defines what modules to build, what message routes to set up, and what version of the IoT Edge runtime to execute.
+3. The deployment.template.json file is used by the build process. It defines what modules to build, what message routes to set up, and what version of the IoT Edge runtime to run.
 
 4. The deployment.json file is generated from the deployment.template.json and is the [Deployment Manifest](https://docs.microsoft.com/en-us/azure/iot-edge/module-composition)
 
@@ -170,9 +176,9 @@ You need to ensure the image you plan to build matches the target processor arch
 1. Specify your Docker repository in the module.json file for each module. For development and testing, it is faster to push images to a local docker registry
 2. Setup a local Docker registry for prototyping and testing purposes. It will significantly speed up the development, deployment and test cycles.
 
-        ```bash
-        docker run -d -p 5000:5000 --restart always --name registry registry:2
-        ```
+    ```bash
+    docker run -d -p 5000:5000 --restart always --name registry registry:2
+    ```
 3. If pushing the image to a local Docker repository the specify localhost:5000. 
     ```json
     "repository": "localhost:5000/camera-capture-opencv"
@@ -200,11 +206,11 @@ When the Docker Build and Push process has completed select the Azure IoT Hub de
 
 ## 4.4. Monitoring the Solution on the IoT Edge Device
 
-Once the solution has been deployed you can monitor its progress on the IoT Edge device itself using the ```iotedge list``` command.
+Once the solution has been deployed you can monitor it on the IoT Edge device itself using the ```iotedge list``` command.
 
-    ```bash
-    iotedge list
-    ```
+```bash
+iotedge list
+```
 
    ![watch iotedge list](docs/iotedge-list.png)
 
