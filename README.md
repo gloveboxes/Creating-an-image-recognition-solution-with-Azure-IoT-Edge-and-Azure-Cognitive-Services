@@ -79,7 +79,7 @@ The main components for an IoT Edge solution are:-
 
 ## 2.2. Solution Architectural Considerations
 
-So, with that overview of Azure IoT Edge here were my initial considerations and constraints for the solution.
+So, with that overview of Azure IoT Edge here were my considerations and constraints for the solution.
 
 1. The solution should scale from a Raspberry Pi (running Raspbian Linux) on ARM32v7, to my desktop development environment, to an industrial capable IoT Edge device such as those found in the [Certified IoT Edge Catalog](https://catalog.azureiotsolutions.com/).
 
@@ -97,9 +97,9 @@ So, with that overview of Azure IoT Edge here were my initial considerations and
 
 ## 3.1. Creating the Fruit Classification Model
 
-The [Azure Custom Vision](https://customvision.ai/) service is a simple way to create an image classification machine learning model without having to be a data science or machine learning expert. You simply upload multiple collections of labeled images. For example, you could upload a collection of bananas images and label them as 'banana'.
+The [Azure Custom Vision](https://customvision.ai/) service is a simple way to create an image classification machine learning model without having to be a data science or machine learning expert. You simply upload multiple collections of labelled images. For example, you could upload a collection of bananas images and label them as 'banana'.
 
-To create your own classification model read [How to build a classifier with Custom Vision](https://docs.microsoft.com/en-us/azure/cognitive-services/custom-vision-service/getting-started-build-a-classifier) for more information. It is important to have a good variety of labeled images so be sure to read [How to improve your classifier](https://docs.microsoft.com/en-us/azure/cognitive-services/custom-vision-service/getting-started-improving-your-classifier) for more information.
+To create your own classification model read [How to build a classifier with Custom Vision](https://docs.microsoft.com/en-us/azure/cognitive-services/custom-vision-service/getting-started-build-a-classifier) for more information. It is important to have a good variety of labelled images so be sure to read [How to improve your classifier](https://docs.microsoft.com/en-us/azure/cognitive-services/custom-vision-service/getting-started-improving-your-classifier) for more information.
 
 ## 3.2. Exporting an Azure Custom Vision Model
 
@@ -140,9 +140,9 @@ Follow these steps to export your Custom Vision project model.
 3. Install the following software development tools.
 
     1. [Visual Studio Code](https://code.visualstudio.com/)
-    2. Plus the following Visual Studio Code Extensions
+    2. Plus, the following Visual Studio Code Extensions
         - [Azure IoT Edge](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-edge)
-        - [JSON Tools](https://marketplace.visualstudio.com/items?itemName=eriklynd.json-tools) useful for modifying the "Create Options" for a module.
+        - [JSON Tools](https://marketplace.visualstudio.com/items?itemName=eriklynd.json-tools) useful for changing the "Create Options" for a module.
     3. [Docker Community Edition](https://docs.docker.com/install/) on your development machine
 
 4. With Visual Studio Code, open the IoT Edge solution you cloned from GitHub to your developer desktop.
