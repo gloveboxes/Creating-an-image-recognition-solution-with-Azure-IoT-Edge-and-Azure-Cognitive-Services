@@ -11,7 +11,7 @@
 
 - [1. Image Classification with Azure IoT Edge](#1-image-classification-with-azure-iot-edge)
     - [1.1. Solution Overview](#11-solution-overview)
-- [2. What is Azure IoT Edge?](#2-what-is-azure-iot-edge)
+- [2. What is Azure IoT Edge](#2-what-is-azure-iot-edge)
     - [2.1. Azure IoT Edge in Action](#21-azure-iot-edge-in-action)
     - [2.2. Solution Architectural Considerations](#22-solution-architectural-considerations)
 - [3. Azure Services](#3-azure-services)
@@ -36,7 +36,7 @@ There are lots of applications for image recognition but what I had in mind when
 
 The system identifies the item scanned against a pre-trained machine learning model, tells the person what they have just scanned, then sends a record of the transaction to a central inventory system.
 
-The solution runs on [Azure IoT Edge](#What is Azure IoT Edge?) and consists of a number of services.
+The solution runs on [Azure IoT Edge](#2-what-is-azure-iot-edge) and consists of a number of services.
 
 1. The **Camera Capture Module** handles scanning items using a camera. It then calls the Image Classification module to identify the item, a call is then made to the "Text to Speech" module to convert item label to speech, and the name of the item scanned is played on the attached speaker.  
 
@@ -56,7 +56,7 @@ The solution runs on [Azure IoT Edge](#What is Azure IoT Edge?) and consists of 
 
 ![IoT Edge Solution Architecture](docs/Architecture.jpg)
 
-# 2. What is Azure IoT Edge?
+# 2. What is Azure IoT Edge
 
 The solution is built on [Azure IoT Edge](https://docs.microsoft.com/en-us/azure/iot-edge/?WT.mc_id=hackster-article-dglover) which is part of the Azure IoT Hub service and is used to define, secure and deploy a solution to an edge device. It also provides cloud-based central monitoring and reporting of the edge device.
 
