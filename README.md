@@ -36,7 +36,7 @@ There are lots of applications for image recognition but what I had in mind when
 
 The system identifies the item scanned against a pre-trained machine learning model, tells the person what they have just scanned, then sends a record of the transaction to a central inventory system.
 
-The solution runs on [Azure IoT Edge](#what-is-azure-iot-edge) and consists of a number of services.
+The solution runs on [Azure IoT Edge](#What is Azure IoT Edge?) and consists of a number of services.
 
 1. The **Camera Capture Module** handles scanning items using a camera. It then calls the Image Classification module to identify the item, a call is then made to the "Text to Speech" module to convert item label to speech, and the name of the item scanned is played on the attached speaker.  
 
