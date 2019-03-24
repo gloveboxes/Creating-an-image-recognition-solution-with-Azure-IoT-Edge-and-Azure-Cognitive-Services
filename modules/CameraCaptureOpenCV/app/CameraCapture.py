@@ -70,6 +70,8 @@ class CameraCapture(object):
         count = count + 1
         print("send frame: " + str(count))
 
+        time.sleep(1)
+
         headers = {'Content-Type': 'application/octet-stream'}
 
         retry = 0

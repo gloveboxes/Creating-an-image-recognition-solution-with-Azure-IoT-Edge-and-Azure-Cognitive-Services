@@ -21,16 +21,17 @@ WORKDIR /app
 
 # https://blog.piwheels.org/new-opencv-builds/
 # https://www.piwheels.org/
-RUN apt-get update && apt install -y  \   
+RUN apt-get update && apt install -y  --no-install-recommends  \   
     libjpeg-dev libtiff5-dev libjasper-dev libpng12-dev \
     libavcodec-dev libavformat-dev libswscale-dev libv4l-dev libxvidcore-dev libx264-dev \
     libgtk2.0-0 libidn11 libglu1-mesa libhdf5-cpp-8 liblapack3 \
     libatlas-base-dev libwebp5 libilmbase6 libopenexr6 libgstreamer1.0-0 libqtgui4 libqt4-test \
-    libcurl3 libboost-python-dev  \
+    libcurl3 libboost-python-dev python3-numpy python3-dev build-essential\
     python3-pip \
     # libatlas3-base libsz2 libharfbuzz0b libtiff5 libilmbase12 libopenexr22 \
     # libilmbase12 libgstreamer1.0-0 libavcodec57 libavformat57 libavutil55 libswscale4 libqtgui4 libqt4-test libqtcore4 \
     git portaudio19-dev wget \
+    # && apt install -y build-essential \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get -y autoremove
 
@@ -49,13 +50,11 @@ RUN apt-get update && apt install -y  \
 # RUN ls /etc
 
 RUN echo "[global]" > /etc/pip.conf && echo "extra-index-url=https://www.piwheels.org/simple" >> /etc/pip.conf
-RUN cat /etc/pip.conf
-RUN ls /etc
 
 # RUN apt-get update && apt install -y python3-pip
 # RUN apt install -y python3-pip
 RUN pip3 install --upgrade setuptools && pip3 install --upgrade pip 
-RUN pip3 install wheel
+# RUN pip3 install wheel
 # RUN apt-get install -y libqtwebkit4 libqt4-test
 
 # RUN pip install numpy
@@ -74,6 +73,7 @@ RUN pip3 install wheel
 
 COPY /build/arm32v7-requirements.txt ./
 RUN pip3 install -r arm32v7-requirements.txt
+
 
 # RUN wget -O opencv.zip https://github.com/Itseez/opencv/archive/3.4.1.zip \   
 #     && unzip opencv.zip \
