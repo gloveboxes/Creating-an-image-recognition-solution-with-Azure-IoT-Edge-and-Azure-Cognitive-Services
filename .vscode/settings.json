@@ -1,3 +1,4 @@
 {
-    "python.pythonPath": "/home/dave/anaconda3/envs/iothub/bin/python"
+    "python.pythonPath": "/home/dave/anaconda3/bin/python",
+    "python.linting.pylintEnabled": true
 }

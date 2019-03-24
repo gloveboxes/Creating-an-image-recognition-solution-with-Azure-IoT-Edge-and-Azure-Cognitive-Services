@@ -6,7 +6,7 @@
                 "amd64": "./amd64.Dockerfile", 
                 "arm32v7": "./arm32v7.Dockerfile"
             }, 
-            "version": "0.1.9405"
+            "version": "0.2.0"
         }, 
         "repository": "glovebox/image-classifier-service"
     }, 

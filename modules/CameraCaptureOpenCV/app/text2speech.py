@@ -2,7 +2,8 @@ from bingtts import Translator
 import pyaudio
 import wave
 import sys
-from cStringIO import StringIO
+import io
+# from cStringIO import StringIO
 
 
 class TextToSpeech():
@@ -13,7 +14,7 @@ class TextToSpeech():
     def playAudio(self, audio):
         CHUNK = 1024
 
-        f = StringIO()
+        f = io.BytesIO()
         f.write(audio)
         f.seek(0)
         wf = wave.Wave_read(f)
