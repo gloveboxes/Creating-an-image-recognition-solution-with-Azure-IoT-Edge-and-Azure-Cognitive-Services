@@ -6,6 +6,9 @@ import os
 import random
 import sys
 import time
+# import ptvsd
+
+# ptvsd.enable_attach()
 
 
 from iothub_client import IoTHubModuleClient, IoTHubClientError, IoTHubTransportProvider
@@ -23,7 +26,10 @@ def send_to_Hub_callback(strMessage):
     if strMessage == []:
         return
     message = IoTHubMessage(bytearray(strMessage, 'utf8'))
+    prop_map = message.properties()
+    prop_map.add("appid", "scanner")
     hubManager.send_event_to_output("output1", message, 0)
+    print('sent from send_to_Hub_callback')
 
 # Callback received when the message that we're forwarding is processed.
 
@@ -77,18 +83,18 @@ def main(
 
     '''
     try:
-        print ("\nPython %s\n" % sys.version)
-        print ("Camera Capture Azure IoT Edge Module. Press Ctrl-C to exit.")
+        print("\nPython %s\n" % sys.version)
+        print("Camera Capture Azure IoT Edge Module. Press Ctrl-C to exit.")
         try:
             global hubManager
             hubManager = HubManager(10000, IoTHubTransportProvider.MQTT)
         except IoTHubError as iothub_error:
-            print ("Unexpected error %s from IoTHub" % iothub_error)
+            print("Unexpected error %s from IoTHub" % iothub_error)
             return
         with CameraCapture(videoPath, bingSpeechKey, predictThreshold, imageProcessingEndpoint, send_to_Hub_callback) as cameraCapture:
             cameraCapture.start()
     except KeyboardInterrupt:
-        print ("Camera capture module stopped")
+        print("Camera capture module stopped")
 
 
 def __convertStringToBool(env):
@@ -107,8 +113,10 @@ if __name__ == '__main__':
         IMAGE_PROCESSING_ENDPOINT = os.getenv('AiEndpoint')
         BING_SPEECH_KEY = os.getenv('BingKey')
 
+        print(os.getenv('IOTEDGE_AUTHSCHEME'))
+
     except ValueError as error:
-        print (error)
+        print(error)
         sys.exit(1)
 
     main(VIDEO_PATH, BING_SPEECH_KEY,

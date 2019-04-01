@@ -30,8 +30,8 @@
                         "version": "1.1",
                         "type": "docker",
                         "settings": {
-                            "image": "${MODULES.CameraCaptureOpenCV.arm32v7}",
-                            "createOptions": "{\"Env\":[\"Video=0\",\"BingKey=7eea5b06e60a41ddb9c81d6458166bfc\",\"AiEndpoint=http://image-classifier-service:80/image\"],\"HostConfig\":{\"Devices\":[{\"PathOnHost\":\"/dev/video0\",\"PathInContainer\":\"/dev/video0\",\"CgroupPermissions\":\"mrw\"},{\"PathOnHost\":\"/dev/snd\",\"PathInContainer\":\"/dev/snd\",\"CgroupPermissions\":\"mrw\"}]}}"
+                            "image": "${MODULES.CameraCaptureOpenCV.amd64}",
+                            "createOptions": "{\"Env\":[\"Video=0\",\"BingKey=7eea5b06e60a41ddb9c81d6458166bfc\",\"AiEndpoint=http://image-classifier-service:80/image\"],\"HostConfig\":{\"PortBindings\":{\"5678/tcp\":[{\"HostPort\":\"5678\"}]},\"Devices\":[{\"PathOnHost\":\"/dev/video0\",\"PathInContainer\":\"/dev/video0\",\"CgroupPermissions\":\"mrw\"},{\"PathOnHost\":\"/dev/snd\",\"PathInContainer\":\"/dev/snd\",\"CgroupPermissions\":\"mrw\"}]}}"
                         }
                     },
                     "image-classifier-service": {
@@ -40,8 +40,8 @@
                         "version": "1.1",
                         "type": "docker",
                         "settings": {
-                            "image": "${MODULES.ImageClassifierService.arm32v7}",
-                            "createOptions": "{\"HostConfig\":{\"Binds\":[\"/home/pi/images:/images\"],\"PortBindings\":{\"8000/tcp\":[{\"HostPort\":\"80\"}]}}}"
+                            "image": "${MODULES.ImageClassifierService.amd64}",
+                            "createOptions": "{\"HostConfig\":{\"Binds\":[\"/home/pi/images:/images\"],\"PortBindings\":{\"8000/tcp\":[{\"HostPort\":\"80\"}],\"5679/tcp\":[{\"HostPort\":\"5679\"}]}}}"
                         }
                     }
                 },

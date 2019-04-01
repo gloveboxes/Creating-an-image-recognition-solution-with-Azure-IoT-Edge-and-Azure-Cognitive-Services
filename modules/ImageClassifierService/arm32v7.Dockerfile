@@ -1,10 +1,7 @@
-# FROM resin/rpi-raspbian:jessie
+﻿FROM balenalib/raspberrypi3
 
-FROM arm32v7/debian:stretch
-COPY ./qemu-arm-static /usr/bin/qemu-arm-static
-
-# Set the working directory
-WORKDIR /app
+# Enable cross building of ARM on x64 hardware, Remove this and the cross-build-end if building on ARM hardware.
+RUN [ "cross-build-start" ]
 
 # Install dependencies
 RUN apt-get update &&  apt-get install -y \
@@ -12,57 +9,35 @@ RUN apt-get update &&  apt-get install -y \
         python3-pip \
         build-essential \
         python3-dev \
+        libopenjp2-7-dev \
+        libtiff5-dev \
         zlib1g-dev \
         libjpeg-dev \
-        wget \
-        libatlas-base-dev
+        libatlas-base-dev \
+        wget
 
-COPY /build/arm32v7-requirements.txt arm32v7-requirements.txt
-
+# Python dependencies
 RUN pip3 install --upgrade pip 
-RUN pip3 install pillow flask
+RUN pip3 install --upgrade setuptools 
+RUN pip3 install pillow
+RUN pip3 install numpy
+RUN pip3 install flask
+RUN pip3 install tensorflow
+RUN pip3 install ptvsd
 
-#https://www.piwheels.org/simple/tensorflow/
-RUN pip3 install --upgrade https://www.piwheels.org/simple/tensorflow/tensorflow-1.9.0-cp35-none-linux_armv7l.whl
-RUN pip3 install ptvsd==3.0.0
+
+# Add the application
 ADD app /app
 
-RUN mkdir /images
-
+# Expose the port
 EXPOSE 80
+EXPOSE 5679
+
+# Set the working directory
+WORKDIR /app
+
+# End cross building of ARM on x64 hardware, Remove this and the cross-build-start if building on ARM hardware.
+RUN [ "cross-build-end" ]
 
 # Run the flask server for the endpoints
-CMD ["python3","main.py"]
-
-
-# FROM resin/rpi-raspbian:jessie
-
-# # Install dependencies
-# RUN apt-get update &&  apt-get install -y \
-#         python3 \
-#         python3-pip \
-#         build-essential \
-#         python3-dev \
-#         zlib1g-dev \
-#         libjpeg-dev \
-#         wget
-
-# COPY /build/arm32v7-requirements.txt arm32v7-requirements.txt
-
-# RUN pip3 install --upgrade pip 
-# RUN pip install --upgrade setuptools 
-# RUN pip install -r arm32v7-requirements.txt
-
-# #TensorFlow 1.5.0
-# RUN pip install http://ci.tensorflow.org/view/Nightly/job/nightly-pi-python3/122/artifact/output-artifacts/tensorflow-1.5.0-cp34-none-any.whl
-
-# ADD app /app
-
-# # Expose the port
-# EXPOSE 80
-
-# # Set the working directory
-# WORKDIR /app
-
-# # Run the flask server for the endpoints
-# CMD ["python3","app.py"]
+CMD ["python3","app.py"]

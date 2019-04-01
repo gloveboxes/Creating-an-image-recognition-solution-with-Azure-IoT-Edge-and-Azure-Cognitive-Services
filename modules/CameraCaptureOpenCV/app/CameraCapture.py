@@ -15,7 +15,6 @@ import json
 import time
 import base64
 import time
-import ptvsd
 
 import VideoStream
 from VideoStream import VideoStream
@@ -24,6 +23,7 @@ import text2speech
 maxRetry = 5
 lastTagSpoken = ''
 count = 0
+
 
 class CameraCapture(object):
 
@@ -68,9 +68,7 @@ class CameraCapture(object):
     def __sendFrameForProcessing(self, frame):
         global count, lastTagSpoken
         count = count + 1
-        print("send frame: " + str(count))
-
-        time.sleep(1)
+        print("sending frame to model: " + str(count))
 
         headers = {'Content-Type': 'application/octet-stream'}
 
@@ -78,27 +76,26 @@ class CameraCapture(object):
         while retry < maxRetry:
             try:
                 response = requests.post(self.imageProcessingEndpoint, headers=headers,
-                                        params=self.imageProcessingParams, data=frame)
+                                         params=self.imageProcessingParams, data=frame)
                 break
             except:
                 retry = retry + 1
-                print('Image Classification REST Endpoint - Retry attempt # ' + str(retry))
+                print(
+                    'Image Classification REST Endpoint - Retry attempt # ' + str(retry))
                 time.sleep(retry)
 
         if retry >= maxRetry:
             return []
 
+        predictions = response.json()['predictions']
         sortResponse = sorted(
-            response.json(), key=lambda k: k['Probability'], reverse=True)[0]
+            predictions, key=lambda k: k['probability'], reverse=True)[0]
+        probability = sortResponse['probability']
 
-        print(sortResponse)
-
-        probability = sortResponse['Probability']
-
-        if probability > self.predictThreshold and sortResponse['Tag'] != lastTagSpoken:
-            lastTagSpoken = sortResponse['Tag']
-            self.tts.Text2Speech(self.__buildSentence(sortResponse['Tag']))
-            return json.dumps(response.json())
+        if probability > self.predictThreshold and sortResponse['tagName'] != lastTagSpoken:
+            lastTagSpoken = sortResponse['tagName']
+            self.tts.Text2Speech(self.__buildSentence(sortResponse['tagName']))
+            return json.dumps(predictions)
         else:
             return []
 
@@ -118,21 +115,30 @@ class CameraCapture(object):
             frameCounter += 1
             frame = self.vs.read()
 
+            # resize to 256 x 256 and center crop
+            h, w = frame.shape[:2]
+            new_w = int(256 / h * w)            
+            croppedimage = cv2.resize(frame, (new_w, 256))[0:256, 42:298]
+
             # Process externally
             if self.imageProcessingEndpoint != "":
-                encodedFrame = cv2.imencode(".jpg", frame)[1].tostring()
+
+                encodedFrame = cv2.imencode(".jpg", croppedimage)[1].tostring()
                 try:
                     response = self.__sendFrameForProcessing(encodedFrame)
+                    # print(response)
+                    # forwarding outcome of external processing to the EdgeHub
+                    if response != "[]" and self.sendToHubCallback is not None:
+                        try:
+                            self.sendToHubCallback(response)
+                        except:
+                            print(
+                                'Issue sending telemetry')
                 except:
-                     print('connectivity issue')
+                    print('connectivity issue')
 
-                # forwarding outcome of external processing to the EdgeHub
-                if response != "[]" and self.sendToHubCallback is not None:
-                    try:
-                        self.sendToHubCallback(response)
-                    except:
-                        print(
-                            'Issue sending telemetry')
+            # slow things down a bit - 1 frame a second is fine for demo purposes and less battery drain and lower Raspberry Pi CPU Temperature
+            time.sleep(1)
 
     def __exit__(self, exception_type, exception_value, traceback):
         pass

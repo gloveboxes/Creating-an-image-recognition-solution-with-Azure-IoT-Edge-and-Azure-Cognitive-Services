@@ -1,11 +1,1 @@
-{
-    "HostConfig": {
-        "PortBindings": {
-            "3000/tcp": [
-                {
-                    "HostPort": "3000"
-                }
-            ]
-        }
-    }
-}
+{\"HostConfig\":{\"Binds\":[\"/home/pi/images:/images\"],\"PortBindings\":{\"8000/tcp\":[{\"HostPort\":\"80\"}],\"5679/tcp\":[{\"HostPort\":\"5679\"}]}}}

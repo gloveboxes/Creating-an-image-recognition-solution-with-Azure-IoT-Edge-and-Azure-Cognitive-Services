@@ -1,33 +1,15 @@
-FROM ubuntu:xenial
+FROM python:3.5
 
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends python3 libcurl4-openssl-dev python3-pip libboost-python-dev && \
-    rm -rf /var/lib/apt/lists/* 
+ADD app /app
 
-
-
-COPY /build/amd64-requirements.txt amd64-requirements.txt
-
-RUN pip3 install --upgrade pip
-RUN pip3 install setuptools
-RUN pip3 install -r amd64-requirements.txt
-
-# ADD app /app
+RUN pip install --upgrade pip
+RUN pip install -r /app/requirements.txt
 
 # Expose the port
 EXPOSE 80
-EXPOSE 3000
 
 # Set the working directory
-# WORKDIR /app
-# ADD app /app
-
-WORKDIR /
-ADD app /
+WORKDIR /app
 
 # Run the flask server for the endpoints
-# CMD python app.py
-
-CMD ["python3", "-m", "main"]
-
-# CMD [ "python", "-u", "main.py" ]
+CMD python -u app.py

@@ -28,7 +28,7 @@ class TextToSpeech():
 
         data = wf.readframes(CHUNK)
 
-        while data != '':
+        while data != b'':
             stream.write(data)
             data = wf.readframes(CHUNK)
 
@@ -40,7 +40,7 @@ class TextToSpeech():
         text = text.lower()
         audio = self.ttsAudio.get(text)
         if audio == None:
-            print('not found')
+            print('audio not found')
             audio = self.translator.speak(
                 text, "en-AU", "Catherine", "riff-16khz-16bit-mono-pcm")
             self.ttsAudio[text] = audio

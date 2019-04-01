@@ -3,21 +3,22 @@ FROM ubuntu:xenial
 WORKDIR /app
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends libcurl4-openssl-dev python-pip python-dev build-essential libgtk2.0-dev libboost-python-dev git portaudio19-dev  && \
+    apt-get install -y --no-install-recommends libcurl4-openssl-dev \
+    python3-pip python3-dev python3-numpy python-opencv build-essential \
+    libgtk2.0-dev libboost-python-dev git portaudio19-dev  && \
     rm -rf /var/lib/apt/lists/* 
 
-RUN python -m pip install --upgrade pip setuptools wheel
+RUN pip3 install --upgrade setuptools && pip3 install --upgrade pip 
+# RUN python -m pip install --upgrade pip setuptools wheel
 COPY /build/amd64-requirements.txt ./
 
-RUN pip install -r amd64-requirements.txt
+RUN pip3 install -r amd64-requirements.txt
 
-RUN pip install pyaudio wave git+https://github.com/westparkcom/Python-Bing-TTS.git
+RUN pip3 install pyaudio wave git+https://github.com/westparkcom/Python-Bing-TTS.git
 
 ADD /app/ .
-ADD /build/ .
-RUN ls
-RUN python --version
+# ADD /build/ .
 
 ENV PYTHONUNBUFFERED=1
 
-CMD [ "python", "-u", "./main.py" ]
+CMD [ "python3", "-u", "./main.py" ]

@@ -5,36 +5,37 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Current File (Integrated Terminal)",
-            "type": "python",
-            "request": "launch",
-            "program": "${file}",
-            "console": "integratedTerminal"
-        },
-        {
-            "name": "Python: Attach",
+            "name": "Python: CameraCaptureOpenCV Remote Attach",
             "type": "python",
             "request": "attach",
             "port": 5678,
-            "host": "localhost"
+            "host": "rpi3bplus.local",
+            "pathMappings": [
+                {
+                    "localRoot": "${workspaceFolder}/modules/CameraCaptureOpenCV/app",
+                    "remoteRoot": "/app/."
+                }
+            ]
         },
         {
-            "name": "Python: Django",
+            "name": "Python: Image Classifier Remote Attach",
             "type": "python",
-            "request": "launch",
-            "program": "${workspaceFolder}/manage.py",
-            "console": "integratedTerminal",
-            "args": [
-                "runserver",
-                "--noreload",
-                "--nothreading"
-            ],
-            "django": true
+            "request": "attach",
+            "port": 5679,
+            "host": "rpi3bplus.local",
+            "pathMappings": [
+                {
+                    "localRoot": "${workspaceFolder}/modules/ImageClassifierService/app",
+                    "remoteRoot": "/app/."
+                }
+            ]
         },
         {
             "name": "Python: Flask",
             "type": "python",
             "request": "launch",
+            "port": 5679,
+            "host": "rpi3bplus.local",
             "module": "flask",
             "env": {
                 "FLASK_APP": "app.py"
@@ -45,13 +46,6 @@
                 "--no-reload"
             ],
             "jinja": true
-        },
-        {
-            "name": "Python: Current File (External Terminal)",
-            "type": "python",
-            "request": "launch",
-            "program": "${file}",
-            "console": "externalTerminal"
         }
     ]
 }

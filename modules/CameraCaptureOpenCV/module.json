@@ -6,7 +6,7 @@
                 "amd64": "./amd64.Dockerfile", 
                 "arm32v7": "./arm32v7.Dockerfile"
             }, 
-            "version": "0.3.9"
+            "version": "1.0.0"
         }, 
         "repository": "glovebox/camera-capture-opencv"
     }, 
