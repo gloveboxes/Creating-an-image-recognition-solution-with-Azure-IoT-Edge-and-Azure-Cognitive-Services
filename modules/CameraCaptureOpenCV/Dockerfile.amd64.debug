@@ -19,6 +19,8 @@ RUN pip3 install pyaudio wave git+https://github.com/westparkcom/Python-Bing-TTS
 ADD /app/ .
 # ADD /build/ .
 
+EXPOSE 5678
+
 ENV PYTHONUNBUFFERED=1
 
 CMD [ "python3", "-u", "./main.py" ]
