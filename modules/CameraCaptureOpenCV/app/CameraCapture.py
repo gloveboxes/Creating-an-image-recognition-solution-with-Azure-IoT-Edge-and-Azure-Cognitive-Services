@@ -138,7 +138,7 @@ class CameraCapture(object):
                     print('connectivity issue')
 
             # slow things down a bit - 1 frame a second is fine for demo purposes and less battery drain and lower Raspberry Pi CPU Temperature
-            time.sleep(1)
+            time.sleep(0.25)
 
     def __exit__(self, exception_type, exception_value, traceback):
         pass
