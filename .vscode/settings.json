@@ -1,4 +1,18 @@
 {
     "python.pythonPath": "/home/dave/anaconda3/envs/iothub-py35/bin/python",
-    "python.linting.pylintEnabled": true
+    "python.linting.pylintEnabled": true,
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#00b300",
+        "activityBar.foreground": "#e7e7e7",
+        "activityBar.inactiveForeground": "#e7e7e799",
+        "activityBarBadge.background": "#dfdfff",
+        "activityBarBadge.foreground": "#15202b",
+        "titleBar.activeBackground": "#008000",
+        "titleBar.inactiveBackground": "#00800099",
+        "titleBar.activeForeground": "#e7e7e7",
+        "titleBar.inactiveForeground": "#e7e7e799",
+        "statusBar.background": "#008000",
+        "statusBarItem.hoverBackground": "#00b300",
+        "statusBar.foreground": "#e7e7e7"
+    }
 }

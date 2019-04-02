@@ -9,7 +9,7 @@
             "type": "python",
             "request": "attach",
             "port": 5678,
-            "host": "rpi3bplus.local",
+            "host": "rpisense.local",
             "pathMappings": [
                 {
                     "localRoot": "${workspaceFolder}/modules/CameraCaptureOpenCV/app",
@@ -22,30 +22,13 @@
             "type": "python",
             "request": "attach",
             "port": 5679,
-            "host": "rpi3bplus.local",
+            "host": "rpisense.local",
             "pathMappings": [
                 {
                     "localRoot": "${workspaceFolder}/modules/ImageClassifierService/app",
                     "remoteRoot": "/app/."
                 }
             ]
-        },
-        {
-            "name": "Python: Flask",
-            "type": "python",
-            "request": "launch",
-            "port": 5679,
-            "host": "rpi3bplus.local",
-            "module": "flask",
-            "env": {
-                "FLASK_APP": "app.py"
-            },
-            "args": [
-                "run",
-                "--no-debugger",
-                "--no-reload"
-            ],
-            "jinja": true
         }
     ]
 }

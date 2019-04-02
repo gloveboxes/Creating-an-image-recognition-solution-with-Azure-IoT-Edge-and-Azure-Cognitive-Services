@@ -3,9 +3,9 @@ import json
 import os
 import io
 
-# import ptvsd
+import ptvsd
 
-# ptvsd.enable_attach(address = ('0.0.0.0', 5679))
+ptvsd.enable_attach(address = ('0.0.0.0', 5679))
 
 # Imports for the REST API
 from flask import Flask, request, jsonify
