@@ -2,17 +2,21 @@
     "python.pythonPath": "/home/dave/anaconda3/envs/iothub-py35/bin/python",
     "python.linting.pylintEnabled": true,
     "workbench.colorCustomizations": {
-        "activityBar.background": "#00b300",
-        "activityBar.foreground": "#e7e7e7",
-        "activityBar.inactiveForeground": "#e7e7e799",
-        "activityBarBadge.background": "#dfdfff",
-        "activityBarBadge.foreground": "#15202b",
-        "titleBar.activeBackground": "#008000",
-        "titleBar.inactiveBackground": "#00800099",
-        "titleBar.activeForeground": "#e7e7e7",
-        "titleBar.inactiveForeground": "#e7e7e799",
-        "statusBar.background": "#008000",
-        "statusBarItem.hoverBackground": "#00b300",
-        "statusBar.foreground": "#e7e7e7"
+        "activityBar.background": "#fdc865",
+        "activityBar.foreground": "#15202b",
+        "activityBar.inactiveForeground": "#15202b99",
+        "activityBarBadge.background": "#029d67",
+        "activityBarBadge.foreground": "#e7e7e7",
+        "titleBar.activeBackground": "#fcb633",
+        "titleBar.inactiveBackground": "#fcb63399",
+        "titleBar.activeForeground": "#15202b",
+        "titleBar.inactiveForeground": "#15202b99",
+        "statusBar.background": "#fcb633",
+        "statusBarItem.hoverBackground": "#f8a304",
+        "statusBar.foreground": "#15202b"
+    },
+    "azure-iot-edge.defaultPlatform": {
+        "platform": "amd64",
+        "alias": null
     }
 }
