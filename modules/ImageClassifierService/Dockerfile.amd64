@@ -9,7 +9,7 @@ RUN pip install -r amd64-requirements.txt
 
 # Expose the port
 EXPOSE 80
-EXPOSE 5679
+
 
 # Set the working directory
 WORKDIR /app
