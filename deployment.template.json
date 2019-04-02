@@ -1,17 +1,6 @@
 {
-    "moduleContent": {
-        "$edgeHub": {
-            "properties.desired": {
-                "routes": {
-                    "camera-capture": "FROM /messages/modules/camera-capture/outputs/output1 INTO $upstream",
-                    "ImageServer": "FROM /messages/modules/ImageServer/outputs/output1 INTO $upstream"
-                },
-                "storeAndForwardConfiguration": {
-                    "timeToLiveSecs": 7200
-                },
-                "schemaVersion": "1.0"
-            }
-        },
+    "$schema-template": "1.0.0",
+    "modulesContent": {
         "$edgeAgent": {
             "properties.desired": {
                 "schemaVersion": "1.0",
@@ -23,34 +12,12 @@
                         "registryCredentials": {}
                     }
                 },
-                "modules": {
-                    "camera-capture": {
-                        "status": "running",
-                        "restartPolicy": "always",
-                        "version": "1.1",
-                        "type": "docker",
-                        "settings": {
-                            "image": "${MODULES.CameraCaptureOpenCV.arm32v7}",
-                            "createOptions": "{\"Env\":[\"Video=0\",\"BingKey=7eea5b06e60a41ddb9c81d6458166bfc\",\"AiEndpoint=http://image-classifier-service:80/image\"],\"HostConfig\":{\"PortBindings\":{\"5678/tcp\":[{\"HostPort\":\"5678\"}]},\"Devices\":[{\"PathOnHost\":\"/dev/video0\",\"PathInContainer\":\"/dev/video0\",\"CgroupPermissions\":\"mrw\"},{\"PathOnHost\":\"/dev/snd\",\"PathInContainer\":\"/dev/snd\",\"CgroupPermissions\":\"mrw\"}]}}"
-                        }
-                    },
-                    "image-classifier-service": {
-                        "status": "running",
-                        "restartPolicy": "always",
-                        "version": "1.1",
-                        "type": "docker",
-                        "settings": {
-                            "image": "${MODULES.ImageClassifierService.arm32v7}",
-                            "createOptions": "{\"HostConfig\":{\"Binds\":[\"/home/pi/images:/images\"],\"PortBindings\":{\"8000/tcp\":[{\"HostPort\":\"80\"}],\"5679/tcp\":[{\"HostPort\":\"5679\"}]}}}"
-                        }
-                    }
-                },
                 "systemModules": {
                     "edgeAgent": {
                         "type": "docker",
                         "settings": {
                             "image": "mcr.microsoft.com/azureiotedge-agent:1.0.6",
-                            "createOptions": ""
+                            "createOptions": {}
                         }
                     },
                     "edgeHub": {
@@ -59,9 +26,107 @@
                         "restartPolicy": "always",
                         "settings": {
                             "image": "mcr.microsoft.com/azureiotedge-hub:1.0.6",
-                            "createOptions": "{\"HostConfig\":{\"PortBindings\":{\"8883/tcp\":[{\"HostPort\":\"8883\"}],\"443/tcp\":[{\"HostPort\":\"443\"}]}}}"
+                            "createOptions": {
+                                "HostConfig": {
+                                    "PortBindings": {
+                                        "5671/tcp": [
+                                            {
+                                                "HostPort": "5671"
+                                            }
+                                        ],
+                                        "8883/tcp": [
+                                            {
+                                                "HostPort": "8883"
+                                            }
+                                        ],
+                                        "443/tcp": [
+                                            {
+                                                "HostPort": "443"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
                         }
                     }
+                },
+                "modules": {
+                    "camera-capture": {
+                        "version": "1.0",
+                        "type": "docker",
+                        "status": "running",
+                        "restartPolicy": "always",
+                        "settings": {
+                            "image": "${MODULES.CameraCaptureOpenCV}",
+                            "createOptions": {
+                                "Env": [
+                                    "Video=0",
+                                    "BingKey=7eea5b06e60a41ddb9c81d6458166bfc",
+                                    "AiEndpoint=http://image-classifier-service:80/image"
+                                ],
+                                "HostConfig": {
+                                    "PortBindings": {
+                                        "5678/tcp": [
+                                            {
+                                                "HostPort": "5678"
+                                            }
+                                        ]
+                                    },
+                                    "Devices": [
+                                        {
+                                            "PathOnHost": "/dev/video0",
+                                            "PathInContainer": "/dev/video0",
+                                            "CgroupPermissions": "mrw"
+                                        },
+                                        {
+                                            "PathOnHost": "/dev/snd",
+                                            "PathInContainer": "/dev/snd",
+                                            "CgroupPermissions": "mrw"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "image-classifier-service": {
+                        "version": "1.0",
+                        "type": "docker",
+                        "status": "running",
+                        "restartPolicy": "always",
+                        "settings": {
+                            "image": "${MODULES.ImageClassifierService}",
+                            "createOptions": {
+                                "HostConfig": {
+                                    "Binds": [
+                                        "/home/pi/images:/images"
+                                    ],
+                                    "PortBindings": {
+                                        "8000/tcp": [
+                                            {
+                                                "HostPort": "80"
+                                            }
+                                        ],
+                                        "5679/tcp": [
+                                            {
+                                                "HostPort": "5679"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "$edgeHub": {
+            "properties.desired": {
+                "schemaVersion": "1.0",
+                "routes": {
+                    "camera-capture": "FROM /messages/modules/camera-capture/outputs/output1 INTO $upstream"
+                },
+                "storeAndForwardConfiguration": {
+                    "timeToLiveSecs": 7200
                 }
             }
         }
