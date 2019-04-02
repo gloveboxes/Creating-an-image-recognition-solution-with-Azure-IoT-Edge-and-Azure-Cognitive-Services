@@ -116,14 +116,14 @@ class CameraCapture(object):
             frame = self.vs.read()
 
             # resize to 256 x 256 and center crop
-            h, w = frame.shape[:2]
-            new_w = int(256 / h * w)            
-            croppedimage = cv2.resize(frame, (new_w, 256))[0:256, 42:298]
+            # h, w = frame.shape[:2]
+            # new_w = int(256 / h * w)            
+            # croppedimage = cv2.resize(frame, (new_w, 256))[0:256, 42:298]
 
             # Process externally
             if self.imageProcessingEndpoint != "":
 
-                encodedFrame = cv2.imencode(".jpg", croppedimage)[1].tostring()
+                encodedFrame = cv2.imencode(".jpg", frame)[1].tostring()
                 try:
                     response = self.__sendFrameForProcessing(encodedFrame)
                     # print(response)

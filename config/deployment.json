@@ -30,7 +30,7 @@
             "version": "1.1",
             "type": "docker",
             "settings": {
-              "image": "glovebox/camera-capture-opencv:1.0.1-arm32v7",
+              "image": "glovebox/camera-capture-opencv:1.0.2-arm32v7",
               "createOptions": "{\"Env\":[\"Video=0\",\"BingKey=7eea5b06e60a41ddb9c81d6458166bfc\",\"AiEndpoint=http://image-classifier-service:80/image\"],\"HostConfig\":{\"PortBindings\":{\"5678/tcp\":[{\"HostPort\":\"5678\"}]},\"Devices\":[{\"PathOnHost\":\"/dev/video0\",\"PathInContainer\":\"/dev/video0\",\"CgroupPermissions\":\"mrw\"},{\"PathOnHost\":\"/dev/snd\",\"PathInContainer\":\"/dev/snd\",\"CgroupPermissions\":\"mrw\"}]}}"
             }
           },
@@ -40,7 +40,7 @@
             "version": "1.1",
             "type": "docker",
             "settings": {
-              "image": "glovebox/image-classifier-service:1.0.1-arm32v7",
+              "image": "glovebox/image-classifier-service:1.0.4-arm32v7",
               "createOptions": "{\"HostConfig\":{\"Binds\":[\"/home/pi/images:/images\"],\"PortBindings\":{\"8000/tcp\":[{\"HostPort\":\"80\"}],\"5679/tcp\":[{\"HostPort\":\"5679\"}]}}}"
             }
           }

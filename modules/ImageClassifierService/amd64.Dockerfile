@@ -7,6 +7,7 @@ RUN pip install -r /app/requirements.txt
 
 # Expose the port
 EXPOSE 80
+EXPOSE 5679
 
 # Set the working directory
 WORKDIR /app
