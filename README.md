@@ -192,16 +192,9 @@ You need to ensure the image you plan to build matches the target processor arch
     "repository": "localhost:5000/camera-capture-opencv"
     ```
 4. Confirm processor architecture you plan to build for.
-    1. Open the **deployment.template.json** file
-    2. Under settings for each module there is an image property that ends with **amd64**. This maps to the Platforms collecting in the **module.json** file for each module, which in turn maps to the Dockerfile to use for the build process. So leave as **amd64** or change to **arm32v7** depending on the platform you are targeting.
+    From the Visual Studio Code bottom bar click the currently selected processor architecture, then from the popup select the desired processor architecture.
+    ![](docs/select-processor-architecture.jpg)
 
-    ```json
-    "image": "${MODULES.ImageClassifierService.amd64}"
-    ```
-5. If you plan to target Raspberry Pi 2, 3, or 3+ and you are developing on Linux you will need to enable cross compiling from Intel to arm32v7. After installing Docker run the following command. See [How to Build ARM Docker Images on Intel host](http://www.hotblackrobotics.com/en/blog/2018/01/22/docker-images-arm/) for more details.
-    ```bash
-    docker run --rm --privileged multiarch/qemu-user-static:register --reset
-    ```
 6. Next, Build and Push the solution to Docker by right mouse clicking the deployment.template.json file and select "**Build and Push IoT Edge Solution**". The first build will be slow as Docker needs to pull the base layers to your local machine. If you are cross compiling to arm32v7 then the first build will be very slow as OpenCV and Python requirements need to be compiled. On a fast Intel i7-8750H processor cross compiling this solution will take approximately 40 minutes.
 
     ![docker build and push](docs/solution-build-push-docker.png)
