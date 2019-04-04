@@ -16,7 +16,7 @@
         "statusBar.foreground": "#15202b"
     },
     "azure-iot-edge.defaultPlatform": {
-        "platform": "amd64",
+        "platform": "arm32v7",
         "alias": null
     }
 }

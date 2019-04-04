@@ -1,3 +1,5 @@
+
+
 |Author|[Dave Glover](https://developer.microsoft.com/en-us/advocates/dave-glover), Microsoft Cloud Developer Advocate |
 |----|---|
 |Solution| [Creating an image recognition solution with Azure IoT Edge and Azure Cognitive Services](https://github.com/gloveboxes/Creating-an-image-recognition-solution-with-Azure-IoT-Edge-and-Azure-Cognitive-Services)|
@@ -5,34 +7,32 @@
 |Platform| [Azure IoT Edge](https://docs.microsoft.com/en-us/azure/iot-edge/?WT.mc_id=hackster-article-dglover)|
 |Documentation | [Azure IoT Edge](https://docs.microsoft.com/en-us/azure/iot-edge/?WT.mc_id=hackster-article-dglover), [Azure Custom Vision](https://docs.microsoft.com/en-us/azure/cognitive-services/custom-vision-service/getting-started-build-a-classifier/?WT.mc_id=hackster-article-dglover), [Azure Speech Services](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/overview/?WT.mc_id=hackster-article-dglover),  [Azure Functions on Edge](https://docs.microsoft.com/en-us/azure/iot-edge/tutorial-deploy-function/?WT.mc_id=hackster-article-dglover), [Azure Stream Analytics](https://docs.microsoft.com/en-us/azure/iot-edge/tutorial-deploy-stream-analytics/?WT.mc_id=hackster-article-dglover), [Azure Machine Learning Services](https://docs.microsoft.com/en-us/azure/iot-edge/tutorial-deploy-machine-learning/?WT.mc_id=hackster-article-dglover) |
 |Video Training|[Enable edge intelligence with Azure IoT Edge](https://channel9.msdn.com/events/Connect/2017/T253)|
-|Date|As at Oct 2018|
+|Date|As at April 2019|
 
-<!-- TOC -->
+<!-- vscode-markdown-toc -->
+* [1.1. Solution Overview](#SolutionOverview)
+* [3.1. Azure IoT Edge in Action](#AzureIoTEdgeinAction)
+* [3.2. Solution Architectural Considerations](#SolutionArchitecturalConsiderations)
+* [4.1. Creating the Fruit Classification Model](#CreatingtheFruitClassificationModel)
+* [4.2. Exporting an Azure Custom Vision Model](#ExportinganAzureCustomVisionModel)
+* [4.3. Azure Speech Services](#AzureSpeechServices)
+* [5.1. Understanding the Project Structure](#UnderstandingtheProjectStructure)
+* [5.2. Building the Solution](#BuildingtheSolution)
+* [5.3. Deploying the Solution](#DeployingtheSolution)
+* [5.4. Monitoring the Solution on the IoT Edge Device](#MonitoringtheSolutionontheIoTEdgeDevice)
+* [5.5. Monitoring the Solution from the Azure IoT Edge Blade](#MonitoringtheSolutionfromtheAzureIoTEdgeBlade)
 
-- [1. Image Classification with Azure IoT Edge](#1-image-classification-with-azure-iot-edge)
-    - [1.1. Solution Overview](#11-solution-overview)
-- [2. What is Azure IoT Edge](#2-what-is-azure-iot-edge)
-    - [2.1. Azure IoT Edge in Action](#21-azure-iot-edge-in-action)
-    - [2.2. Solution Architectural Considerations](#22-solution-architectural-considerations)
-- [3. Azure Services](#3-azure-services)
-    - [3.1. Creating the Fruit Classification Model](#31-creating-the-fruit-classification-model)
-    - [3.2. Exporting an Azure Custom Vision Model](#32-exporting-an-azure-custom-vision-model)
-    - [3.3. Azure Speech Services](#33-azure-speech-services)
-- [4. How to install, build and deploy the solution](#4-how-to-install-build-and-deploy-the-solution)
-    - [4.1. Understanding the Project Structure](#41-understanding-the-project-structure)
-    - [4.2. Building the Solution](#42-building-the-solution)
-    - [4.3. Deploying the Solution](#43-deploying-the-solution)
-    - [4.4. Monitoring the Solution on the IoT Edge Device](#44-monitoring-the-solution-on-the-iot-edge-device)
-    - [4.5. Monitoring the Solution from the Azure IoT Edge Blade](#45-monitoring-the-solution-from-the-azure-iot-edge-blade)
-- [5. Done!](#5-done)
-
-<!-- /TOC -->
+<!-- vscode-markdown-toc-config
+	numbering=false
+	autoSave=true
+	/vscode-markdown-toc-config -->
+<!-- /vscode-markdown-toc -->
 
 # 1. Image Classification with Azure IoT Edge
 
 There are lots of applications for image recognition but what I had in mind when developing this application was a solution for vision impaired people scanning fruit and vegetables at a self-service check out.
 
-## 1.1. Solution Overview
+## <a name='SolutionOverview'></a>1.1. Solution Overview
 
 The system identifies the item scanned against a pre-trained machine learning model, tells the person what they have just scanned, then sends a record of the transaction to a central inventory system.
 
@@ -56,7 +56,14 @@ The solution runs on [Azure IoT Edge](#2-what-is-azure-iot-edge) and consists of
 
 ![IoT Edge Solution Architecture](docs/Architecture.jpg)
 
-# 2. What is Azure IoT Edge
+# 2. Quick Installation Guide
+
+1. Prepare your Raspberry Pi
+1. [Install Azure IoT Edge runtime on Raspberry Pi](https://docs.microsoft.com/en-us/azure/iot-edge/how-to-install-iot-edge-linux-arm)
+1. Deploy prebuilt solution
+
+
+# 3. What is Azure IoT Edge
 
 The solution is built on [Azure IoT Edge](https://docs.microsoft.com/en-us/azure/iot-edge/?WT.mc_id=hackster-article-dglover) which is part of the Azure IoT Hub service and is used to define, secure and deploy a solution to an edge device. It also provides cloud-based central monitoring and reporting of the edge device.
 
@@ -74,11 +81,11 @@ The main components for an IoT Edge solution are:-
 
 6. [Deployment Manifest](https://docs.microsoft.com/en-us/azure/iot-edge/module-composition/?WT.mc_id=hackster-article-dglover). The Deployment Manifest pulls everything together and tells the Azure IoT Edge runtime what modules to deploy, from where, plus what message routes to set up, and what create options to start each module with.
 
-## 2.1. Azure IoT Edge in Action
+## <a name='AzureIoTEdgeinAction'></a>3.1. Azure IoT Edge in Action
 
 ![iot edge in action](docs/iot-edge-in-action.jpg)
 
-## 2.2. Solution Architectural Considerations
+## <a name='SolutionArchitecturalConsiderations'></a>3.2. Solution Architectural Considerations
 
 So, with that overview of Azure IoT Edge here were my considerations and constraints for the solution.
 
@@ -94,15 +101,15 @@ So, with that overview of Azure IoT Edge here were my considerations and constra
 
 ![raspberry pi image classifier](docs/raspberry-pi-image-classifier.jpg)
 
-# 3. Azure Services
+# 4. Azure Services
 
-## 3.1. Creating the Fruit Classification Model
+## <a name='CreatingtheFruitClassificationModel'></a>4.1. Creating the Fruit Classification Model
 
 The [Azure Custom Vision](https://docs.microsoft.com/en-us/azure/cognitive-services/custom-vision-service/?WT.mc_id=hackster-article-dglover) service is a simple way to create an image classification machine learning model without having to be a data science or machine learning expert. You simply upload multiple collections of labelled images. For example, you could upload a collection of banana images and label them as 'banana'.
 
 To create your own classification model read [How to build a classifier with Custom Vision](https://docs.microsoft.com/en-us/azure/cognitive-services/custom-vision-service/getting-started-build-a-classifier/?WT.mc_id=hackster-article-dglover) for more information. It is important to have a good variety of labelled images so be sure to read [How to improve your classifier](https://docs.microsoft.com/en-us/azure/cognitive-services/custom-vision-service/getting-started-improving-your-classifier/?WT.mc_id=hackster-article-dglover).
 
-## 3.2. Exporting an Azure Custom Vision Model
+## <a name='ExportinganAzureCustomVisionModel'></a>4.2. Exporting an Azure Custom Vision Model
 
 This "Image Classification" module includes a simple fruit classification model that was exported from Azure Custom Vision. For more information read how to [Export your model for use with mobile devices](https://docs.microsoft.com/en-us/azure/cognitive-services/custom-vision-service/export-your-model/?WT.mc_id=hackster-article-dglover). It is important to select one of the "**compact**" domains from the project settings page otherwise you will not be able to export the model.
 
@@ -122,7 +129,7 @@ Follow these steps to export your Custom Vision project model.
 
 4. Download the docker file and unzip and you have a ready-made Docker solution with a Python Flask REST API. This was how I created the Azure IoT Edge Image Classification module in this solution. Too easy:)
 
-## 3.3. Azure Speech Services
+## <a name='AzureSpeechServices'></a>4.3. Azure Speech Services
 
 [Azure Speech Services](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/overview/?WT.mc_id=hackster-article-dglover) supports both "speech to text" and "text to speech". For this solution, I'm using the text to speech (F0) free tier which is limited to 5 million characters per month. You will need to add the Speech service using the Azure Portal and "Grab your key" from the service.
 
@@ -132,7 +139,7 @@ Open the deployment.template.json file and update the BingKey with the key you c
 
 ![speech key](docs/speech-key.png)
 
-# 4. How to install, build and deploy the solution
+# 5. How to install, build and deploy the solution
 
 1. Clone this GitHub
 
@@ -154,7 +161,7 @@ Open the deployment.template.json file and update the BingKey with the key you c
 
 4. With Visual Studio Code, open the IoT Edge solution you cloned from GitHub to your developer desktop.
 
-## 4.1. Understanding the Project Structure
+## <a name='UnderstandingtheProjectStructure'></a>5.1. Understanding the Project Structure
 
 The following describes the highlighted sections of the project.
 
@@ -170,7 +177,7 @@ The following describes the highlighted sections of the project.
 
 ![visual studio code project structure](docs/visual-studio-code-open-project.png)
 
-## 4.2. Building the Solution
+## <a name='BuildingtheSolution'></a>5.2. Building the Solution
 
 You need to ensure the image you plan to build matches the target processor architecture specified in the deployment.template.json file.
 
@@ -199,13 +206,13 @@ You need to ensure the image you plan to build matches the target processor arch
 
     ![docker build and push](docs/solution-build-push-docker.png)
 
-## 4.3. Deploying the Solution
+## <a name='DeployingtheSolution'></a>5.3. Deploying the Solution
 
 When the Docker Build and Push process has completed select the Azure IoT Hub device you want to deploy the solution to. Right mouse click the deployment.json file found in the config folder and select the target device from the drop-down list.
 
    ![deploy to device](docs/deploy-to-device.png)
 
-## 4.4. Monitoring the Solution on the IoT Edge Device
+## <a name='MonitoringtheSolutionontheIoTEdgeDevice'></a>5.4. Monitoring the Solution on the IoT Edge Device
 
 Once the solution has been deployed you can monitor it on the IoT Edge device itself using the ```iotedge list``` command.
 
@@ -215,7 +222,7 @@ iotedge list
 
    ![watch iotedge list](docs/iotedge-list.png)
 
-## 4.5. Monitoring the Solution from the Azure IoT Edge Blade
+## <a name='MonitoringtheSolutionfromtheAzureIoTEdgeBlade'></a>5.5. Monitoring the Solution from the Azure IoT Edge Blade
 
 You can monitor the state of the Azure IoT Edge module from the Azure IoT Hub blade on the [Azure Portal](http://portal.azure.com).
 
@@ -225,7 +232,7 @@ You can monitor the state of the Azure IoT Edge module from the Azure IoT Hub bl
 
    ![azure iot edge device details](docs/azure-portal-iotedge-device-details.png)
 
-# 5. Done!
+# 6. Done!
 
 When the solution is finally deployed to the IoT Edge device the system will start telling you what items it thinks have been scanned.
 

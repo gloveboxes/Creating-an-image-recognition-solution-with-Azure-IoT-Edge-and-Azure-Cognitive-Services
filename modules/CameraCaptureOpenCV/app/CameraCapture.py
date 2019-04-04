@@ -110,17 +110,12 @@ class CameraCapture(object):
         return self
 
     def start(self):
+
         frameCounter = 0
         while True:
             frameCounter += 1
             frame = self.vs.read()
 
-            # resize to 256 x 256 and center crop
-            # h, w = frame.shape[:2]
-            # new_w = int(256 / h * w)            
-            # croppedimage = cv2.resize(frame, (new_w, 256))[0:256, 42:298]
-
-            # Process externally
             if self.imageProcessingEndpoint != "":
 
                 encodedFrame = cv2.imencode(".jpg", frame)[1].tostring()
@@ -137,8 +132,8 @@ class CameraCapture(object):
                 except:
                     print('connectivity issue')
 
-            # slow things down a bit - 1 frame a second is fine for demo purposes and less battery drain and lower Raspberry Pi CPU Temperature
-            time.sleep(0.25)
+            # slow things down a bit - 2 frame a second is fine for demo purposes and less battery drain and lower Raspberry Pi CPU Temperature
+            time.sleep(0.5)
 
     def __exit__(self, exception_type, exception_value, traceback):
         pass

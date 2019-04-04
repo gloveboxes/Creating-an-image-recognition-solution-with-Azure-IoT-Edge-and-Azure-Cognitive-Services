@@ -2,6 +2,7 @@
 from __future__ import absolute_import
 
 from threading import Thread
+import time
 import sys
 if sys.version_info[0] < 3:  # e.g python version <3
     import cv2
@@ -37,6 +38,12 @@ class VideoStream(object):
         return self
 
     def update(self):
+        previousFrame = None
+        previousDiff = 0
+        delta = 0
+        skippedFrames = 0
+        queuedFrames = 0
+
         try:
             while True:
                 if self.stopped:
@@ -51,16 +58,32 @@ class VideoStream(object):
                         self.stop()
                         return
                     # new_img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                    self.Q.put(frame)
 
-                    # Clean the queue to keep only the latest frame
-                    while self.Q.qsize() > 1:
-                        self.Q.get()
+                    if type(previousFrame) == type(frame):
+                        difference = cv2.subtract(frame, previousFrame)
+                        b, g, r = cv2.split(difference)
+                        diff = cv2.countNonZero(b) + cv2.countNonZero(g) + cv2.countNonZero(r)
+                        delta = abs(diff - previousDiff)
+
+                        previousFrame = frame
+                        previousDiff = diff
+                    else:
+                        previousFrame = frame
+
+                    if delta > 200000:
+                        # Clean the queue
+                        while not self.Q.empty():
+                            self.Q.get()
+                        self.Q.put(frame)
+                        queuedFrames = queuedFrames + 1
+                    else:
+                        skippedFrames = skippedFrames + 1
+
         except Exception as e:
             print("got error: "+str(e))
 
     def read(self):
-        return self.Q.get()
+        return self.Q.get(block=True)
 
     def more(self):
         return self.Q.qsize() > 0
