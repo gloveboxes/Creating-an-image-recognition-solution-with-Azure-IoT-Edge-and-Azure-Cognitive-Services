@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "/home/dave/anaconda3/envs/iothub-py35/bin/python",
+    "python.pythonPath": "C:\\Users\\dglover\\AppData\\Local\\conda\\conda\\envs\\iothub-py35\\python.exe",
     "python.linting.pylintEnabled": true,
     "workbench.colorCustomizations": {
         "activityBar.background": "#fdc865",

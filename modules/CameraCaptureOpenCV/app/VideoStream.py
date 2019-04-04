@@ -59,23 +59,25 @@ class VideoStream(object):
                         return
                     # new_img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
-                    if type(previousFrame) == type(frame):
-                        difference = cv2.subtract(frame, previousFrame)
-                        b, g, r = cv2.split(difference)
-                        diff = cv2.countNonZero(b) + cv2.countNonZero(g) + cv2.countNonZero(r)
-                        delta = abs(diff - previousDiff)
-
+                    if type(previousFrame) != type(frame):
                         previousFrame = frame
-                        previousDiff = diff
-                    else:
-                        previousFrame = frame
+                        continue
 
-                    if delta > 200000:
+                    difference = cv2.subtract(frame, previousFrame)
+                    b, g, r = cv2.split(difference)
+                    diff = cv2.countNonZero(b) + cv2.countNonZero(g) + cv2.countNonZero(r)
+                    delta = abs(diff - previousDiff)
+
+                    if delta > 70000:
                         # Clean the queue
                         while not self.Q.empty():
                             self.Q.get()
                         self.Q.put(frame)
                         queuedFrames = queuedFrames + 1
+
+                        previousFrame = frame
+                        previousDiff = diff
+
                     else:
                         skippedFrames = skippedFrames + 1
 
