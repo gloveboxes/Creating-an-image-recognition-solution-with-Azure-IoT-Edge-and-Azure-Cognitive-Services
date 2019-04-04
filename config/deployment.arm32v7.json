@@ -46,7 +46,7 @@
             "status": "running",
             "restartPolicy": "always",
             "settings": {
-              "image": "glovebox/image-classifier-service:1.0.3-arm32v7",
+              "image": "glovebox/image-classifier-service:1.1.0-arm32v7",
               "createOptions": "{\"HostConfig\":{\"Binds\":[\"/home/pi/images:/images\"],\"PortBindings\":{\"8000/tcp\":[{\"HostPort\":\"80\"}],\"5679/tcp\":[{\"HostPort\":\"5679\"}]}}}"
             }
           }
