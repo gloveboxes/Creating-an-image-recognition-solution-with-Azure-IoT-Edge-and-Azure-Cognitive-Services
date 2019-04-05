@@ -7,13 +7,18 @@
 |Platform| [Azure IoT Edge](https://docs.microsoft.com/en-us/azure/iot-edge/?WT.mc_id=devto-blog-dglover)|
 |Documentation | [Azure IoT Edge](https://docs.microsoft.com/en-us/azure/iot-edge/?WT.mc_id=devto-blog-dglover), [Azure Custom Vision](https://docs.microsoft.com/en-us/azure/cognitive-services/custom-vision-service/getting-started-build-a-classifier/?WT.mc_id=devto-blog-dglover), [Azure Speech Services](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/overview/?WT.mc_id=devto-blog-dglover),  [Azure Functions on Edge](https://docs.microsoft.com/en-us/azure/iot-edge/tutorial-deploy-function/?WT.mc_id=devto-blog-dglover), [Azure Stream Analytics](https://docs.microsoft.com/en-us/azure/iot-edge/tutorial-deploy-stream-analytics/?WT.mc_id=devto-blog-dglover), [Azure Machine Learning Services](https://docs.microsoft.com/en-us/azure/iot-edge/tutorial-deploy-machine-learning/?WT.mc_id=devto-blog-dglover) |
 |Video Training|[Enable edge intelligence with Azure IoT Edge](https://channel9.msdn.com/events/Connect/2017/T253)|
+|Programming Language| Python|
 |Date|As at April 2019|
 
+
+**Raspberry Pi 3A+ running Azure IoT Edge Image Classifier**
+
+![](https://github.com/gloveboxes/Creating-an-image-recognition-solution-with-Azure-IoT-Edge-and-Azure-Cognitive-Services/raw/master/docs/raspberry-pi-3a-image-classifier.png)
 
 
 <!-- vscode-markdown-toc -->
 * [Parts Required](#PartsRequired)
-* [TL;DR; Quick Installation Guide](#TLDRQuickInstallationGuide)
+* [Quick Installation Guide for Raspberry Pi](#QuickInstallationGuideforRaspberryPi)
 * [Solution Overview](#SolutionOverview)
 * [Azure IoT Edge in Action](#AzureIoTEdgeinAction)
 * [Solution Architectural Considerations](#SolutionArchitecturalConsiderations)
@@ -34,7 +39,7 @@
 
 # Image Classification with Azure IoT Edge
 
-There are lots of applications for image recognition but what I had in mind when developing this application was a solution for vision impaired people scanning fruit and vegetables at a self-service check out.
+There are lots of applications for image recognition but what I had in mind when developing this application was a solution for vision impaired people scanning fruit and vegetables at a self-service checkout.
 
 ## <a name='PartsRequired'></a>Parts Required
 
@@ -44,7 +49,7 @@ There are lots of applications for image recognition but what I had in mind when
 2. Alternatively, you can run the solution on desktop Linux - such as Ubuntu 18.04. This solution requires USB camera pass through into a Docker container as well as Azure IoT Edge support. So for now, that is Linux.
 
 
-## <a name='TLDRQuickInstallationGuide'></a>TL;DR; Quick Installation Guide
+## <a name='QuickInstallationGuideforRaspberryPi'></a>Quick Installation Guide for Raspberry Pi
 
 If you do not want to download and build the solution you can use the prebuilt Azure IoT Edge configuration from my [GitHub](https://github.com/gloveboxes?tab=repositories) repository and use the associated Docker images.
 
@@ -57,9 +62,11 @@ If you do not want to download and build the solution you can use the prebuilt A
 1. Install the [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli/?WT.mc_id=devto-blog-dglover) and the [IoT extension for Azure CLI](https://github.com/Azure/azure-iot-cli-extension) command line tools. For more information, see [Deploy Azure IoT Edge modules with Azure CLI](https://docs.microsoft.com/en-us/azure/iot-edge/how-to-deploy-modules-cli/?WT.mc_id=devto-blog-dglover)
 1. Open a command line console/terminal and change directory to the location where you saved the deployment.arm32v7.json file.
 1. Finally, from the command line run the following command, be sure to substitute [device id] and the [hub name] values.
-    ```bash
-    az iot edge set-modules --device-id [device id] --hub-name [hub name] --content deployment.arm32v7.json
-    ```
+
+```bash
+az iot edge set-modules --device-id [device id] --hub-name [hub name] --content deployment.arm32v7.json
+```
+
 1. The modules will now start to deploy to your Raspberry Pi, the Raspberry Pi green activity LED will flicker until the deployment completes. Approximately 1.5 GB of Dockers modules will be downloaded and decompressed on the Raspberry Pi. This is a one off operation.
 
 
@@ -85,7 +92,7 @@ The solution runs on [Azure IoT Edge](#2-what-is-azure-iot-edge) and consists of
 
 8. **Azure Custom Vision service** was used to build the fruit model used for image classification.
 
-![IoT Edge Solution Architecture](docs/Architecture.jpg)
+![IoT Edge Solution Architecture](https://github.com/gloveboxes/Creating-an-image-recognition-solution-with-Azure-IoT-Edge-and-Azure-Cognitive-Services/raw/master/docs/Architecture.jpg)
 
 # What is Azure IoT Edge
 
@@ -107,7 +114,7 @@ The main components for an IoT Edge solution are:-
 
 ## <a name='AzureIoTEdgeinAction'></a>Azure IoT Edge in Action
 
-![iot edge in action](docs/iot-edge-in-action.jpg)
+![iot edge in action](https://github.com/gloveboxes/Creating-an-image-recognition-solution-with-Azure-IoT-Edge-and-Azure-Cognitive-Services/raw/master/docs/iot-edge-in-action.jpg)
 
 ## <a name='SolutionArchitecturalConsiderations'></a>Solution Architectural Considerations
 
@@ -121,9 +128,9 @@ So, with that overview of Azure IoT Edge here were my considerations and constra
 
 4. I wanted my developer experience to mirror the devices I was targeting plus I needed Docker support for the USB webcam, so I developed the solution on my Ubuntu 18.04 developer desktop. See my [Ubuntu for Azure Developers](https://gloveboxes.github.io/Ubuntu-for-Azure-Developers/) guide.
 
-    - As a workaround, if your development device is locked to Windows then use Ubuntu in Virtual Box which allows USB device pass-through which you can then pass-through to Docker in the Virtual Machine. A bit convoluted but it does work.
+    As a workaround, if your development device is locked to Windows then use Ubuntu in Virtual Box which allows USB device pass-through which you can then pass-through to Docker in the Virtual Machine. A bit convoluted but it does work.
 
-![raspberry pi image classifier](docs/raspberry-pi-image-classifier.jpg)
+![raspberry pi image classifier](https://github.com/gloveboxes/Creating-an-image-recognition-solution-with-Azure-IoT-Edge-and-Azure-Cognitive-Services/raw/master/docs/raspberry-pi-image-classifier.jpg)
 
 # Azure Services
 
@@ -141,15 +148,15 @@ Follow these steps to export your Custom Vision project model.
 
 1. From the **Performance** tab of your Custom Vision project click **Export**.
 
-    ![export model](docs/exportmodel.png)
+    ![export model](https://github.com/gloveboxes/Creating-an-image-recognition-solution-with-Azure-IoT-Edge-and-Azure-Cognitive-Services/raw/master/docs/exportmodel.png)
 
 2. Select Dockerfile from the list of available options
 
-    ![export-as-docker.png](docs/export-as-docker.png)
+    ![export-as-docker.png](https://github.com/gloveboxes/Creating-an-image-recognition-solution-with-Azure-IoT-Edge-and-Azure-Cognitive-Services/raw/master/docs/export-as-docker.png)
 
 3. Then select the Linux version of the Dockerfile.
 
-   ![choose docker](docs/export-choose-your-platform.png)
+   ![choose docker](https://github.com/gloveboxes/Creating-an-image-recognition-solution-with-Azure-IoT-Edge-and-Azure-Cognitive-Services/raw/master/docs/export-choose-your-platform.png)
 
 4. Download the docker file and unzip and you have a ready-made Docker solution with a Python Flask REST API. This was how I created the Azure IoT Edge Image Classification module in this solution. Too easy:)
 
@@ -157,18 +164,18 @@ Follow these steps to export your Custom Vision project model.
 
 [Azure Speech Services](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/overview/?WT.mc_id=devto-blog-dglover) supports both "speech to text" and "text to speech". For this solution, I'm using the text to speech (F0) free tier which is limited to 5 million characters per month. You will need to add the Speech service using the Azure Portal and "Grab your key" from the service.
 
-![azure speech service](docs/speech-service.png)
+![azure speech service](https://github.com/gloveboxes/Creating-an-image-recognition-solution-with-Azure-IoT-Edge-and-Azure-Cognitive-Services/raw/master/docs/speech-service.png)
 
 Open the deployment.template.json file and update the BingKey with the key you copied from the Azure Speech service.
 
-![speech key](docs/speech-key.png)
+![speech key](https://github.com/gloveboxes/Creating-an-image-recognition-solution-with-Azure-IoT-Edge-and-Azure-Cognitive-Services/raw/master/docs/speech-key.png)
 
 # How to install, build and deploy the solution
 
 1. Clone this GitHub repository.
 
    ```bash
-   git clone https://github.com/gloveboxes/Azure-IoT-Edge-Custom-Vision-Image-Classification-with-Speech.git
+   git clone https://github.com/gloveboxes/Creating-an-image-recognition-solution-with-Azure-IoT-Edge-and-Azure-Cognitive-Services.git
    ```
 
 2. Install the Azure IoT Edge runtime on your Linux desktop or device (eg Raspberry Pi).
@@ -199,7 +206,7 @@ The following describes the highlighted sections of the project.
 
 5. The version.py in the project root folder is a helper app you can run on your development machine that updates the version number of each module. Useful as a change in the version number is what triggers Azure IoT Edge runtime to pull the updated module and it is easy to forget to change the module version numbers:)
 
-![visual studio code project structure](docs/visual-studio-code-open-project.png)
+![visual studio code project structure](https://github.com/gloveboxes/Creating-an-image-recognition-solution-with-Azure-IoT-Edge-and-Azure-Cognitive-Services/raw/master/docs/visual-studio-code-open-project.png)
 
 ## <a name='BuildingtheSolution'></a>Building the Solution
 
@@ -209,26 +216,26 @@ You need to ensure the image you plan to build matches the target processor arch
 
     To set up a local Docker Registry for prototyping and testing purposes.
 
-    ```bash
-    docker run -d -p 5000:5000 --restart always --name registry registry:2
-    ```
+```bash
+docker run -d -p 5000:5000 --restart always --name registry registry:2
+```
 3. If pushing the image to a local Docker repository the specify localhost:5000. 
-    ```json
-    "repository": "localhost:5000/camera-capture-opencv"
-    ```
+```json
+"repository": "localhost:5000/camera-capture-opencv"
+```
 4. Confirm processor architecture you plan to build for.
     From the Visual Studio Code bottom bar click the currently selected processor architecture, then from the popup select the desired processor architecture.
-    ![](docs/select-processor-architecture.jpg)
+    ![](https://github.com/gloveboxes/Creating-an-image-recognition-solution-with-Azure-IoT-Edge-and-Azure-Cognitive-Services/raw/master/docs/select-processor-architecture.jpg)
 
 6. Next, Build and Push the solution to Docker by right mouse clicking the deployment.template.json file and select "**Build and Push IoT Edge Solution**". The first build will be slow as Docker needs to pull the base layers to your local machine. If you are cross compiling to arm32v7 then the first build will be very slow as OpenCV and Python requirements need to be compiled. On a fast Intel i7-8750H processor cross compiling this solution will take approximately 40 minutes.
 
-    ![docker build and push](docs/solution-build-push-docker.png)
+    ![docker build and push](https://github.com/gloveboxes/Creating-an-image-recognition-solution-with-Azure-IoT-Edge-and-Azure-Cognitive-Services/raw/master/docs/solution-build-push-docker.png)
 
 ## <a name='DeployingtheSolution'></a>Deploying the Solution
 
 When the Docker Build and Push process has completed select the Azure IoT Hub device you want to deploy the solution to. Right mouse click the deployment.json file found in the config folder and select the target device from the drop-down list.
 
-   ![deploy to device](docs/deploy-to-device.png)
+   ![deploy to device](https://github.com/gloveboxes/Creating-an-image-recognition-solution-with-Azure-IoT-Edge-and-Azure-Cognitive-Services/raw/master/docs/deploy-to-device.png)
 
 ## <a name='MonitoringtheSolutionontheIoTEdgeDevice'></a>Monitoring the Solution on the IoT Edge Device
 
@@ -238,17 +245,17 @@ Once the solution has been deployed you can monitor it on the IoT Edge device it
 iotedge list
 ```
 
-   ![watch iotedge list](docs/iotedge-list.png)
+   ![watch iotedge list](https://github.com/gloveboxes/Creating-an-image-recognition-solution-with-Azure-IoT-Edge-and-Azure-Cognitive-Services/raw/master/docs/iotedge-list.png)
 
 ## <a name='MonitoringtheSolutionfromtheAzureIoTEdgeBlade'></a>Monitoring the Solution from the Azure IoT Edge Blade
 
 You can monitor the state of the Azure IoT Edge module from the Azure IoT Hub blade on the [Azure Portal](http://portal.azure.com).
 
-   ![azure iot edge devices](docs/azure-iotedge-monitoring.png)
+   ![azure iot edge devices](https://github.com/gloveboxes/Creating-an-image-recognition-solution-with-Azure-IoT-Edge-and-Azure-Cognitive-Services/raw/master/docs/azure-iotedge-monitoring.png)
 
    Click on the device from the Azure IoT Edge blade to view more details about the modules  running on the device.
 
-   ![azure iot edge device details](docs/azure-portal-iotedge-device-details.png)
+   ![azure iot edge device details](https://github.com/gloveboxes/Creating-an-image-recognition-solution-with-Azure-IoT-Edge-and-Azure-Cognitive-Services/raw/master/docs/azure-portal-iotedge-device-details.png)
 
 # Done!
 
@@ -256,4 +263,4 @@ When the solution is finally deployed to the IoT Edge device the system will sta
 
 Congratulations you have deployed your first Azure IoT Edge Solution!
 
-![congratulations](docs/congratulations.jpg)
+![congratulations](https://github.com/gloveboxes/Creating-an-image-recognition-solution-with-Azure-IoT-Edge-and-Azure-Cognitive-Services/raw/master/docs/congratulations.jpg)
