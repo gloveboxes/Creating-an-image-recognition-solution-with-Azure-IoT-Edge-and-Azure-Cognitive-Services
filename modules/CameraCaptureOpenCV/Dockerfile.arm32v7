@@ -14,7 +14,7 @@ RUN apt-get update &&  apt-get install -y --no-install-recommends  \
     && apt-get -y autoremove
 
 RUN pip3 install --upgrade setuptools && pip3 install --upgrade pip 
-RUN pip3 install azure-iothub-device-client opencv-contrib-python requests ptvsd pyaudio wave git+https://github.com/westparkcom/Python-Bing-TTS.git
+RUN pip3 install azure-iothub-device-client opencv-contrib-python requests ptvsd pyaudio wave 
 
 WORKDIR /app
 
