@@ -1,17 +1,17 @@
-from bingtts import Translator
+from azure_speech import AzureSpeechServices
 import pyaudio
 import wave
 import sys
 import io
-# from cStringIO import StringIO
 
 
 class TextToSpeech():
-    def __init__(self, bingTtsKey):
-        self.translator = Translator(bingTtsKey)
+    # Short name for 'Microsoft Server Speech Text to Speech Voice (en-US, GuyNeural)'
+    def __init__(self, azureSpeechServiceKey, voice='en-US-GuyNeural'):
+        self.translator = AzureSpeechServices(azureSpeechServiceKey)
         self.ttsAudio = {}
 
-    def playAudio(self, audio):
+    def _playAudio(self, audio):
         CHUNK = 1024
 
         f = io.BytesIO()
@@ -36,12 +36,14 @@ class TextToSpeech():
         stream.close()
         p.terminate()
 
-    def Text2Speech(self, text):
+    def play(self, text):
         text = text.lower()
         audio = self.ttsAudio.get(text)
         if audio == None:
             print('audio not found')
-            audio = self.translator.speak(
-                text, "en-AU", "Catherine", "riff-16khz-16bit-mono-pcm")
+            audio = self.translator.get_audio(text)
+
+            # audio = self.translator.speak(
+            #     text, "en-AU", "Catherine", "riff-16khz-16bit-mono-pcm")
             self.ttsAudio[text] = audio
-        self.playAudio(audio)
+        self._playAudio(audio)

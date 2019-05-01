@@ -24,8 +24,8 @@ class VideoStream(object):
     def __init__(self, path, queueSize=3):
         print('opening camera')
         self.stream = cv2.VideoCapture(0)
-        # self.stream.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
-        # self.stream.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
+        # self.stream.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+        # self.stream.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
         # self.stream.set(cv2.CAP_PROP_SETTINGS, 1 )
         self.stopped = False
         self.Q = Queue(maxsize=queueSize)
@@ -68,7 +68,7 @@ class VideoStream(object):
                     diff = cv2.countNonZero(b) + cv2.countNonZero(g) + cv2.countNonZero(r)
                     delta = abs(diff - previousDiff)
 
-                    if delta > 70000:
+                    if delta > 60000:
                         # Clean the queue
                         while not self.Q.empty():
                             self.Q.get()

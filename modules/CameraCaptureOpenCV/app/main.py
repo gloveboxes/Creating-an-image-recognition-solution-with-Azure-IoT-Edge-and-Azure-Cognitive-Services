@@ -111,7 +111,7 @@ if __name__ == '__main__':
         VIDEO_PATH = os.getenv('Video', '0')
         PREDICT_THRESHOLD = os.getenv('Threshold', .98)
         IMAGE_PROCESSING_ENDPOINT = os.getenv('AiEndpoint')
-        BING_SPEECH_KEY = os.getenv('BingKey')
+        AZURE_SPEECH_SERVICES_KEY = os.getenv('azureSpeechServicesKey', None)
 
         print(os.getenv('IOTEDGE_AUTHSCHEME'))
 
@@ -119,5 +119,5 @@ if __name__ == '__main__':
         print(error)
         sys.exit(1)
 
-    main(VIDEO_PATH, BING_SPEECH_KEY,
+    main(VIDEO_PATH, AZURE_SPEECH_SERVICES_KEY,
          PREDICT_THRESHOLD, IMAGE_PROCESSING_ENDPOINT)

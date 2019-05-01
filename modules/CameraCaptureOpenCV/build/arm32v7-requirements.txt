@@ -6,4 +6,4 @@ requests
 ptvsd
 pyaudio 
 wave 
-git+https://github.com/westparkcom/Python-Bing-TTS.git
+# git+https://github.com/westparkcom/Python-Bing-TTS.git

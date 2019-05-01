@@ -37,18 +37,18 @@ class CameraCapture(object):
     def __init__(
             self,
             videoPath,
-            bingSpeechKey,
+            azureSpeechServiceKey,
             predictThreshold,
             imageProcessingEndpoint,
             sendToHubCallback=None
     ):
         self.videoPath = videoPath
-        self.tts = text2speech.TextToSpeech(bingSpeechKey)
+        self.tts = text2speech.TextToSpeech(azureSpeechServiceKey)
         self.predictThreshold = predictThreshold
         self.imageProcessingEndpoint = imageProcessingEndpoint
         self.imageProcessingParams = ""
         self.sendToHubCallback = sendToHubCallback
-        self.tts.Text2Speech('Starting scanner')
+        self.tts.play('Starting scanner')
 
         if self.__IsInt(videoPath):
             # case of a usb camera (usually mounted at /dev/video* where * is an int)
@@ -94,7 +94,7 @@ class CameraCapture(object):
 
         if probability > self.predictThreshold and sortResponse['tagName'] != lastTagSpoken:
             lastTagSpoken = sortResponse['tagName']
-            self.tts.Text2Speech(self.__buildSentence(sortResponse['tagName']))
+            self.tts.play(self.__buildSentence(sortResponse['tagName']))
             return json.dumps(predictions)
         else:
             return []
