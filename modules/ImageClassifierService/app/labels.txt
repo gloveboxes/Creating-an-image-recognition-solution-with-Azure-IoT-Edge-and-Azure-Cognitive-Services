@@ -1,5 +1,5 @@
 Avocado
-Banana
+banana
 Granny Smith
 orange
 Red Apple
