@@ -14,7 +14,7 @@ COPY /build/amd64-requirements.txt ./
 
 RUN pip3 install -r amd64-requirements.txt
 
-RUN pip3 install pyaudio wave git+https://github.com/westparkcom/Python-Bing-TTS.git
+RUN pip3 install pyaudio wave
 
 ADD /app/ .
 # ADD /build/ .

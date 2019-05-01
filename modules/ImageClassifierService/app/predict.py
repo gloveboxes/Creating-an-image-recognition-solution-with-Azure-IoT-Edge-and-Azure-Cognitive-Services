@@ -202,10 +202,10 @@ def predict_image(image):
 
         w, h = image.size
 
-        xpos = (w - 227) / 2
-        ypos = (h - 227) / 2
+        xpos = (w - network_input_size) / 2
+        ypos = (h - network_input_size) / 2
 
-        box = (xpos, ypos, xpos + 227, ypos + 227)
+        box = (xpos, ypos, xpos + network_input_size, ypos + network_input_size)
         image = image.crop(box)
 
         w, h = image.size

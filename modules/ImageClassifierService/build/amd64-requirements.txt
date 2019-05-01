@@ -2,3 +2,4 @@ tensorflow
 pillow
 numpy
 flask
+ptvsd

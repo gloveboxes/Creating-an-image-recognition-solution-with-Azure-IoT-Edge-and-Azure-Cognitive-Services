@@ -1,7 +1,5 @@
 FROM python:3.5
 
-ADD app /app
-
 RUN pip install --upgrade pip
 
 COPY /build/amd64-requirements.txt ./
@@ -9,7 +7,9 @@ RUN pip install -r amd64-requirements.txt
 
 # Expose the port
 EXPOSE 80
+EXPOSE 5679
 
+ADD app /app
 
 # Set the working directory
 WORKDIR /app

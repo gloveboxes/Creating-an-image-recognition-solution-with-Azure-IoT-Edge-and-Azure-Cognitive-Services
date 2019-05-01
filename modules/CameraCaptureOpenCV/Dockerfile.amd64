@@ -21,4 +21,6 @@ ADD /app/ .
 
 ENV PYTHONUNBUFFERED=1
 
+EXPOSE 5678
+
 CMD [ "python3", "-u", "./main.py" ]

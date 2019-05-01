@@ -16,7 +16,7 @@
             "type": "python",
             "request": "attach",
             "port": 5678,
-            "host": "rpisense.local",
+            "host": "localhost",
             "pathMappings": [
                 {
                     "localRoot": "${workspaceFolder}/modules/CameraCaptureOpenCV/app",
@@ -29,7 +29,7 @@
             "type": "python",
             "request": "attach",
             "port": 5679,
-            "host": "rpisense.local",
+            "host": "localhost",
             "pathMappings": [
                 {
                     "localRoot": "${workspaceFolder}/modules/ImageClassifierService/app",
