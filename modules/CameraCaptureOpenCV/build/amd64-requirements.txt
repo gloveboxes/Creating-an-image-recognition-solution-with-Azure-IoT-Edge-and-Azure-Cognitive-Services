@@ -1,9 +1,4 @@
 azure-iothub-device-client
 requests
 ptvsd
-# numpy
-# opencv-python
 opencv-contrib-python
-# pyaudio 
-# wave 
-# git+https://github.com/westparkcom/Python-Bing-TTS.git

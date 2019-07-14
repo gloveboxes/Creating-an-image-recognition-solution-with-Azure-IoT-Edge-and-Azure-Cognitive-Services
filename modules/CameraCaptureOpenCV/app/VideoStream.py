@@ -68,7 +68,7 @@ class VideoStream(object):
                     diff = cv2.countNonZero(b) + cv2.countNonZero(g) + cv2.countNonZero(r)
                     delta = abs(diff - previousDiff)
 
-                    if delta > 60000:
+                    if delta > 50000:
                         # Clean the queue
                         while not self.Q.empty():
                             self.Q.get()

@@ -1,4 +1,4 @@
-﻿FROM balenalib/raspberrypi3
+﻿FROM balenalib/raspberrypi3:stretch
 
 # Enable cross building of ARM on x64 hardware, Remove this and the cross-build-end if building on ARM hardware.
 RUN [ "cross-build-start" ]
@@ -7,7 +7,6 @@ RUN [ "cross-build-start" ]
 RUN apt-get update &&  apt-get install -y --no-install-recommends \
         python3 \
         python3-pip \
-        # python3-numpy \
         build-essential \
         python3-dev \
         libopenjp2-7-dev \
@@ -15,25 +14,13 @@ RUN apt-get update &&  apt-get install -y --no-install-recommends \
         zlib1g-dev \
         libjpeg-dev \
         libatlas-base-dev \
-        # wget \
         && rm -rf /var/lib/apt/lists/* \
         && apt-get -y autoremove
 
 # Python dependencies
 
 RUN pip3 install --upgrade setuptools && pip3 install --upgrade pip 
-# RUN pip3 install --upgrade pip 
-# RUN pip3 install --upgrade setuptools 
-RUN pip3 install pillow flask tensorflow ptvsd
-
-
-# RUN pip3 install --upgrade setuptools 
-# RUN pip3 install pillow
-# RUN pip3 install numpy
-# RUN pip3 install flask
-# RUN pip3 install tensorflow
-# RUN pip3 install ptvsd
-
+RUN pip3 install pillow numpy flask tensorflow ptvsd
 
 # Add the application
 ADD app /app
