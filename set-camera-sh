@@ -5,8 +5,8 @@
 
 v4l2-ctl --set-ctrl=power_line_frequency=1
 v4l2-ctl --set-ctrl=focus_auto=0
-v4l2-ctl --set-ctrl=brightness=180
+v4l2-ctl --set-ctrl=brightness=150
 v4l2-ctl --set-ctrl=contrast=7
 v4l2-ctl --set-ctrl=saturation=100
 v4l2-ctl --set-ctrl=focus_absolute=20
-v4l2-ctl --set-ctrl=zoom_absolute=45
+v4l2-ctl --set-ctrl=zoom_absolute=20

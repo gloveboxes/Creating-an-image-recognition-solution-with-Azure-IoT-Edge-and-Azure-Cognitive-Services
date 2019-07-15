@@ -19,8 +19,16 @@ RUN apt-get update &&  apt-get install -y --no-install-recommends \
 
 # Python dependencies
 
-RUN pip3 install --upgrade setuptools && pip3 install --upgrade pip 
-RUN pip3 install pillow numpy flask tensorflow ptvsd
+# RUN pip3 install --upgrade setuptools && pip3 install --upgrade pip 
+# RUN pip3 install pillow numpy flask tensorflow ptvsd
+
+# Python dependencies
+RUN pip3 install --upgrade pip 
+RUN pip3 install --upgrade setuptools 
+RUN pip3 install pillow
+RUN pip3 install numpy
+RUN pip3 install flask
+RUN pip3 install tensorflow
 
 # Add the application
 ADD app /app

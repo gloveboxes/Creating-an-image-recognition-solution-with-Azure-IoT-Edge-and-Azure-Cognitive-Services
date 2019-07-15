@@ -91,6 +91,7 @@ class CameraCapture(object):
         sortResponse = sorted(
             predictions, key=lambda k: k['probability'], reverse=True)[0]
         probability = sortResponse['probability']
+        print("label: {}, probability {}".format(sortResponse['tagName'], sortResponse['probability']))
 
         if probability > self.predictThreshold and sortResponse['tagName'] != lastTagSpoken:
             lastTagSpoken = sortResponse['tagName']
