@@ -2,6 +2,7 @@
 
 # USB Camera Settings - most import is to turn off the auto focus
 # https://www.kurokesu.com/main/2016/01/16/manual-usb-camera-settings-in-linux/
+# v4l2-ctl -d /dev/video0 --list-ctrls
 
 v4l2-ctl --set-ctrl=power_line_frequency=1
 v4l2-ctl --set-ctrl=focus_auto=0
