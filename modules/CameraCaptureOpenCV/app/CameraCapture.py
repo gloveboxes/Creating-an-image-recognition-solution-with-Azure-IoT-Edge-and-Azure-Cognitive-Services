@@ -85,12 +85,19 @@ class CameraCapture(object):
                 time.sleep(retry)
 
         if retry >= maxRetry:
+            print("retry inference")
             return []
 
         predictions = response.json()['predictions']
         sortResponse = sorted(
             predictions, key=lambda k: k['probability'], reverse=True)[0]
         probability = sortResponse['probability']
+
+        if sortResponse['tagName'] == 'Hand':
+            lastTagSpoken = sortResponse['tagName']
+            print("Hand Found")
+            return []
+
         print("label: {}, probability {}".format(sortResponse['tagName'], sortResponse['probability']))
 
         if probability > self.predictThreshold and sortResponse['tagName'] != lastTagSpoken:
@@ -133,8 +140,8 @@ class CameraCapture(object):
                 except:
                     print('connectivity issue')
 
-            # slow things down a bit - 2 frame a second is fine for demo purposes and less battery drain and lower Raspberry Pi CPU Temperature
-            time.sleep(0.5)
+            # slow things down a bit - 4 frame a second is fine for demo purposes and less battery drain and lower Raspberry Pi CPU Temperature
+            time.sleep(0.25)
 
     def __exit__(self, exception_type, exception_value, traceback):
         pass

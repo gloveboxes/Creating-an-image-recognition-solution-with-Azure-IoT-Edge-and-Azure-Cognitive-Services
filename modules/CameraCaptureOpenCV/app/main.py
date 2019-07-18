@@ -109,7 +109,7 @@ def __convertStringToBool(env):
 if __name__ == '__main__':
     try:
         VIDEO_PATH = os.getenv('Video', '0')
-        PREDICT_THRESHOLD = os.getenv('Threshold', .95)
+        PREDICT_THRESHOLD = os.getenv('Threshold', .88)
         IMAGE_PROCESSING_ENDPOINT = os.getenv('AiEndpoint')
         AZURE_SPEECH_SERVICES_KEY = os.getenv('azureSpeechServicesKey', None)
 
