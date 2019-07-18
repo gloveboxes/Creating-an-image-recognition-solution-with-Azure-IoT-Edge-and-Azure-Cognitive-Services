@@ -34,6 +34,5 @@ class TextToSpeech():
 
         self.sound = mixer.Sound(audio)
         self.sound.play()
-
-        while mixer.get_busy():
-            time.sleep(0.25)
+        
+        time.sleep(self.sound.get_length())
