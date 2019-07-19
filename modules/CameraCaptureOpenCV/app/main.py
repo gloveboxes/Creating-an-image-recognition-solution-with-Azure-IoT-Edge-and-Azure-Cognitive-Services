@@ -8,7 +8,7 @@ import sys
 import time
 import ptvsd
 
-ptvsd.enable_attach()
+# ptvsd.enable_attach()
 
 
 from iothub_client import IoTHubModuleClient, IoTHubClientError, IoTHubTransportProvider
