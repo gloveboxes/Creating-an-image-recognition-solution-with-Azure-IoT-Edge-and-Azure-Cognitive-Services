@@ -13,6 +13,7 @@ RUN apt-get update &&  apt-get install -y --no-install-recommends  \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get -y autoremove
 
+RUN export PIP_DEFAULT_TIMEOUT=100 
 RUN pip3 install --upgrade setuptools && pip3 install --upgrade pip 
 RUN pip3 install azure-iothub-device-client opencv-contrib-python requests ptvsd 
 

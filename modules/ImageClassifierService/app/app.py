@@ -2,21 +2,16 @@
 import json
 import os
 import io
-
-# import ptvsd
-
-# ptvsd.enable_attach(address = ('0.0.0.0', 5679))
-
-# Imports for the REST API
 from flask import Flask, request, jsonify
-
-# Imports for image procesing
 from PIL import Image
 
-# Imports for prediction
-from predict import initialize, predict_image, predict_url
+from predict import Predict
+
+# import ptvsd
+# ptvsd.enable_attach(address = ('0.0.0.0', 5679))
 
 app = Flask(__name__)
+predict = Predict()
 
 # 4MB Max image size limit
 app.config['MAX_CONTENT_LENGTH'] = 4 * 1024 * 1024 
@@ -47,7 +42,7 @@ def predict_image_handler(project=None, publishedName=None):
             imageData = io.BytesIO(request.get_data())
 
         img = Image.open(imageData)
-        results = predict_image(img)
+        results = predict.predict_image(img)
         return jsonify(results)
     except Exception as e:
         print('EXCEPTION:', str(e))
@@ -67,16 +62,13 @@ def predict_image_handler(project=None, publishedName=None):
 def predict_url_handler(project=None, publishedName=None):
     try:
         image_url = json.loads(request.get_data().decode('utf-8'))['url']
-        results = predict_url(image_url)
+        results = predict.predict_url(image_url)
         return jsonify(results)
     except Exception as e:
         print('EXCEPTION:', str(e))
         return 'Error processing image'
 
 if __name__ == '__main__':
-    # Load and intialize the model
-    initialize()
-
     # Run the server
     app.run(host='0.0.0.0', port=80)
 

@@ -23,6 +23,7 @@ RUN apt-get update &&  apt-get install -y --no-install-recommends \
 # RUN pip3 install pillow numpy flask tensorflow ptvsd
 
 # Python dependencies
+RUN export PIP_DEFAULT_TIMEOUT=100 
 RUN pip3 install --upgrade pip 
 RUN pip3 install --upgrade setuptools 
 RUN pip3 install pillow
