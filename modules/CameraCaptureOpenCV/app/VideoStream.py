@@ -49,37 +49,37 @@ class VideoStream(object):
                 if self.stopped:
                     return
 
-                if not self.Q.full():
-                    (grabbed, frame) = self.stream.read()
+                (grabbed, frame) = self.stream.read()
 
-                    # if the `grabbed` boolean is `False`, then we have
-                    # reached the end of the video file
-                    if not grabbed:
-                        self.stop()
-                        return
-                    # new_img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                # if the `grabbed` boolean is `False`, then we have
+                # reached the end of the video file
+                if not grabbed:
+                    self.stop()
+                    return
 
-                    if type(previousFrame) != type(frame):
-                        previousFrame = frame
-                        continue
+                if previousFrame is None:
+                    previousFrame = frame
+                    continue
 
-                    difference = cv2.subtract(frame, previousFrame)
-                    b, g, r = cv2.split(difference)
-                    diff = cv2.countNonZero(b) + cv2.countNonZero(g) + cv2.countNonZero(r)
-                    delta = abs(diff - previousDiff)
+                difference = cv2.subtract(frame, previousFrame)
+                b, g, r = cv2.split(difference)
+                diff = cv2.countNonZero(b) + cv2.countNonZero(g) + cv2.countNonZero(r)
+                delta = abs(diff - previousDiff)
 
-                    if delta > 70000:
-                        # Clean the queue
-                        while not self.Q.empty():
-                            self.Q.get()
-                        self.Q.put(frame)
-                        queuedFrames = queuedFrames + 1
+                if delta > 80000:
+                    # Clean the queue
+                    while not self.Q.empty():
+                        self.Q.get()
+                    self.Q.put(frame)
+                    queuedFrames = queuedFrames + 1
 
-                        previousFrame = frame
-                        previousDiff = diff
+                    previousFrame = frame
+                    previousDiff = diff
 
-                    else:
-                        skippedFrames = skippedFrames + 1
+                else:
+                    skippedFrames = skippedFrames + 1
+
+                time.sleep(0.15)
 
         except Exception as e:
             print("got error: "+str(e))
