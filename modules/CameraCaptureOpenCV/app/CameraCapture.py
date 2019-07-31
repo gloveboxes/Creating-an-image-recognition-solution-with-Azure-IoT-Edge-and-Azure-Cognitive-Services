@@ -43,7 +43,8 @@ class CameraCapture(object):
             sendToHubCallback
     ):
         self.videoPath = videoPath
-        self.tts = text2speech.TextToSpeech(azureSpeechServiceKey)
+        self.tts = text2speech.TextToSpeech(
+            azureSpeechServiceKey, enableMemCache=True, enableDiskCache=True)
         self.predictThreshold = predictThreshold
         self.imageProcessingEndpoint = imageProcessingEndpoint
         self.imageProcessingParams = ""
@@ -93,13 +94,12 @@ class CameraCapture(object):
             predictions, key=lambda k: k['probability'], reverse=True)[0]
         probability = sortResponse['probability']
 
-        if sortResponse['tagName'] == 'Hand':
-            lastTagSpoken = sortResponse['tagName']
-            print("Hand Found")
-            return []
-
         print("label: {}, probability {}".format(
             sortResponse['tagName'], sortResponse['probability']))
+
+        if sortResponse['tagName'] == 'Hand':
+            lastTagSpoken = sortResponse['tagName']
+            return []
 
         if probability > self.predictThreshold and sortResponse['tagName'] != lastTagSpoken:
             lastTagSpoken = sortResponse['tagName']
