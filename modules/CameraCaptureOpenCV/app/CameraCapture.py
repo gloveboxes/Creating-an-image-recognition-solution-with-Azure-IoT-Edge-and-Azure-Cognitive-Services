@@ -15,6 +15,7 @@ import json
 import time
 import base64
 import time
+import os.path
 
 import VideoStream
 from VideoStream import VideoStream
@@ -44,7 +45,7 @@ class CameraCapture(object):
     ):
         self.videoPath = videoPath
         self.tts = text2speech.TextToSpeech(
-            azureSpeechServiceKey, enableMemCache=True, enableDiskCache=True)
+            azureSpeechServiceKey, enableMemCache=True, enableDiskCache=True, voice='en-AU-Catherine')
         self.predictThreshold = predictThreshold
         self.imageProcessingEndpoint = imageProcessingEndpoint
         self.imageProcessingParams = ""
@@ -56,6 +57,18 @@ class CameraCapture(object):
             self.isWebcam = True
 
         self.vs = None
+
+        self.localized = {
+            "Granny Smith":"녹색 사과 스캔",
+            "banana":"바나나 스캔",
+            "Red Apple":"빨간 사과 스캔",
+            "orange":"오렌지 스캔"
+            }
+
+
+        # if os.path.isfile("localize.json"):
+        #     with open("localize.json") as f:
+        #         self.localized  = json.load(f)
 
     def __buildSentence(self, tag):
         vowels = ('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U')
@@ -103,7 +116,15 @@ class CameraCapture(object):
 
         if probability > self.predictThreshold and sortResponse['tagName'] != lastTagSpoken:
             lastTagSpoken = sortResponse['tagName']
-            self.tts.play(self.__buildSentence(sortResponse['tagName']))
+            print('text to speech ' + lastTagSpoken)
+            self.tts.play(self.__buildSentence(lastTagSpoken))
+            # localized_text = self.localized.get(lastTagSpoken, None)
+            # if localized_text is None:
+            #     pass
+            #     # self.tts.play(self.__buildSentence(sortResponse['tagName']))
+            # else:
+            #     self.tts.play(localized_text)
+
             return json.dumps(predictions)
         else:
             return []

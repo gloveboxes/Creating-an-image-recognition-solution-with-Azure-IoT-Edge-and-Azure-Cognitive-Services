@@ -20,8 +20,6 @@ class AzureSpeechServices(object):
         self.access_token = None
         self.access_token_ttl = 0
 
-        self.voice_list = self.get_voice_list()
-
     def get_token(self):
         '''
         The TTS endpoint requires an access token. This method exchanges your
@@ -33,7 +31,8 @@ class AzureSpeechServices(object):
         if self.subscription_key is None:
             return
 
-        if abs(time.time() - self.access_token_ttl) < 10 * 60:
+        # for safety get new token if older than 9 minutes
+        if abs(time.time() - self.access_token_ttl) < 9 * 60:
             return
 
         fetch_token_url = TOKEN_URL
@@ -44,47 +43,36 @@ class AzureSpeechServices(object):
         self.access_token = str(response.text)
         self.access_token_ttl = time.time()
 
-    def get_voice_list(self):
-        if self.subscription_key is None:
-            return
-
-        self.get_token()
-
-        constructed_url = BASE_URL + VOICES_PATH
-        headers = {
-            'Authorization': 'Bearer ' + self.access_token
-        }
-
-        response = requests.get(constructed_url, headers=headers)
-        if response.status_code == 200:
-            return response.content
-        return None
-
     def get_audio(self, text):
         if self.subscription_key is None:
             return
-        self.get_token()
 
-        constructed_url = BASE_URL + TEXT_TO_SPEECH_PATH
-        headers = {
-            'Authorization': 'Bearer ' + self.access_token,
-            'Content-Type': 'application/ssml+xml',
-            'X-Microsoft-OutputFormat': 'riff-16khz-16bit-mono-pcm',
-            'User-Agent': 'YOUR_RESOURCE_NAME'
-        }
-        xml_body = ElementTree.Element('speak', version='1.0')
-        xml_body.set('{http://www.w3.org/XML/1998/namespace}lang', 'en-us')
-        voice = ElementTree.SubElement(xml_body, 'voice')
-        voice.set('{http://www.w3.org/XML/1998/namespace}lang', 'en-US')
-        voice.set('name', self.short_voice_name)
-        voice.text = text
-        body = ElementTree.tostring(xml_body)
+        try:
+            self.get_token()
 
-        response = requests.post(constructed_url, headers=headers, data=body)
+            constructed_url = BASE_URL + TEXT_TO_SPEECH_PATH
+            headers = {
+                'Authorization': 'Bearer ' + self.access_token,
+                'Content-Type': 'application/ssml+xml',
+                'X-Microsoft-OutputFormat': 'riff-16khz-16bit-mono-pcm',
+                'User-Agent': 'YOUR_RESOURCE_NAME'
+            }
+            xml_body = ElementTree.Element('speak', version='1.0')
+            xml_body.set('{http://www.w3.org/XML/1998/namespace}lang', 'en-us')
+            voice = ElementTree.SubElement(xml_body, 'voice')
+            voice.set('{http://www.w3.org/XML/1998/namespace}lang', 'en-US')
+            voice.set('name', self.short_voice_name)
+            voice.text = text
+            body = ElementTree.tostring(xml_body)
 
-        if response.status_code == 200:
-            return response.content
-        else:
-            print("\nStatus code: " + str(response.status_code) +
-                  "\nSomething went wrong. Check your subscription key and headers.\n")
+            response = requests.post(
+                constructed_url, headers=headers, data=body)
+
+            if response.status_code == 200:
+                return response.content
+            else:
+                print("\nStatus code: " + str(response.status_code) +
+                      "\nSomething went wrong. Check your subscription key and headers.\n")
+                return None
+        except:
             return None

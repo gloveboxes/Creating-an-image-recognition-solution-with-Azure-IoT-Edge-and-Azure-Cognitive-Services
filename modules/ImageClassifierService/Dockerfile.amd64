@@ -3,6 +3,10 @@ FROM python:3.5
 RUN pip install --upgrade pip
 
 COPY /build/amd64-requirements.txt ./
+
+RUN export PIP_DEFAULT_TIMEOUT=100 
+RUN pip3 install --upgrade pip 
+RUN pip3 install --upgrade setuptools 
 RUN pip install -r amd64-requirements.txt
 
 # Expose the port

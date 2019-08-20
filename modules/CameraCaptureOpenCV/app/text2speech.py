@@ -9,7 +9,7 @@ from datetime import datetime
 
 
 class TextToSpeech():
-    def __init__(self, azureSpeechServiceKey, voice='en-US-JessaNeural', azureTranslatorServiceKey=None, translateToLanguage=None, enableMemCache=False, enableDiskCache=False):
+    def __init__(self, azureSpeechServiceKey, voice='en-US-GuyNeural', azureTranslatorServiceKey=None, translateToLanguage=None, enableMemCache=False, enableDiskCache=False):
         self.text2Speech = AzureSpeechServices(azureSpeechServiceKey, voice)
         self.translateText = AzureTranslationServices(
             azureTranslatorServiceKey, translateToLanguage)
@@ -21,8 +21,8 @@ class TextToSpeech():
         self.enableDiskCache = enableDiskCache
 
         self.ttsAudio = {}
+        mixer.pre_init(frequency=16000, size=-16, channels=1)
 
-        mixer.init(frequency=16000, size=-16, channels=1)
         self.startSoundTime = datetime.min
         self.soundLength = 0.0
 
@@ -46,13 +46,18 @@ class TextToSpeech():
             else:
                 if self.azureTranslatorServiceKey is not None and self.translateToLanguage is not None:
                     translatedText = self.translateText.translate(text)
-
                     if translatedText is None:
-                        translatedText = text
+                        print(
+                            'Text to Speech problem: Check internet connection or Translation key or language')
+                    return
                 else:
                     translatedText = text
 
                 audio = self.text2Speech.get_audio(translatedText)
+                if audio is None:
+                    print(
+                        'Text to Speech problem: Check internet connection or Speech key')
+                    return
 
                 if self.enableDiskCache and audio is not None:
                     with open(cacheFileName, 'wb') as audiofile:
@@ -60,17 +65,21 @@ class TextToSpeech():
             if self.enableMemCache:
                 self.ttsAudio[digestKey] = audio
 
-        if self.startSoundTime != datetime.min:
-            self.deltaSeconds = (
-                datetime.now() - self.startSoundTime).total_seconds()
-            if self.deltaSeconds < self.soundLength:
-                delay = self.soundLength - self.deltaSeconds
-                time.sleep(delay)
-
-        self.startSoundTime = datetime.now()
+        # retry logic for mixer in situation where another app might have mixer open
+        retry = 0
+        while retry < 8:
+            try:
+                mixer.init()
+                break
+            except:
+                print('mixer init error/retry')
+                time.sleep(1)
+                retry += 1
+        else:
+            return
 
         self.sound = mixer.Sound(audio)
         self.sound.play()
+        time.sleep(self.sound.get_length())
 
-        self.soundLength = self.sound.get_length()
-        return self.soundLength
+        mixer.quit()

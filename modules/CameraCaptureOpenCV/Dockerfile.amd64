@@ -13,9 +13,10 @@ RUN pip3 install --upgrade setuptools && pip3 install --upgrade pip
 COPY /build/amd64-requirements.txt ./
 
 RUN pip3 install -r amd64-requirements.txt
-RUN pip3 install pygame
 
-# RUN pip3 install pyaudio wave
+RUN apt-get update && \
+    apt-get install -y libsdl1.2-dev libsdl-image1.2-dev libsdl-mixer1.2-dev && \
+    rm -rf /var/lib/apt/lists/* 
 
 ADD /app/ .
 # ADD /build/ .

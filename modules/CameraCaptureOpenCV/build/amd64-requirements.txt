@@ -2,3 +2,4 @@ azure-iothub-device-client
 requests
 ptvsd
 opencv-contrib-python
+pygame

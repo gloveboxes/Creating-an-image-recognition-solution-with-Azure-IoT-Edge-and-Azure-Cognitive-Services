@@ -8,7 +8,8 @@ import sys
 import time
 import ptvsd
 
-# ptvsd.enable_attach()
+ptvsd.enable_attach(address=('0.0.0.0', 5678))
+# ptvsd.wait_for_attach()
 
 
 from iothub_client import IoTHubModuleClient, IoTHubClientError, IoTHubTransportProvider
