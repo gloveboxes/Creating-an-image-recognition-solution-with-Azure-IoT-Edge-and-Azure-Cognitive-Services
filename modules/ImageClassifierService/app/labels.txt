@@ -1,6 +1,6 @@
 Avocado
-banana
-Granny Smith
+Banana
+Green Apple
 Hand
-orange
+Orange
 Red Apple

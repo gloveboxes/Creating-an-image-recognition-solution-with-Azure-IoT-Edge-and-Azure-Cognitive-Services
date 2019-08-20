@@ -2,7 +2,7 @@
     "python.pythonPath": "/usr/bin/python3",
     "python.linting.pylintEnabled": true,
     "azure-iot-edge.defaultPlatform": {
-        "platform": "amd64",
+        "platform": "arm32v7",
         "alias": null
     }
 }
