@@ -16,7 +16,7 @@
             "type": "python",
             "request": "attach",
             "port": 5678,
-            "host": "localhost",
+            "host": "192.168.1.198",
             "pathMappings": [
                 {
                     "localRoot": "${workspaceFolder}/modules/CameraCaptureOpenCV/app",

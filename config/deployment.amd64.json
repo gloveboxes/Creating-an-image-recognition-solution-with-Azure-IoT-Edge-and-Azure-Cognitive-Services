@@ -15,7 +15,7 @@
           "edgeAgent": {
             "type": "docker",
             "settings": {
-              "image": "mcr.microsoft.com/azureiotedge-agent:1.0.7",
+              "image": "mcr.microsoft.com/azureiotedge-agent:1.0.8",
               "createOptions": "{}"
             }
           },
@@ -24,7 +24,7 @@
             "status": "running",
             "restartPolicy": "always",
             "settings": {
-              "image": "mcr.microsoft.com/azureiotedge-hub:1.0.7",
+              "image": "mcr.microsoft.com/azureiotedge-hub:1.0.8",
               "createOptions": "{\"HostConfig\":{\"PortBindings\":{\"5671/tcp\":[{\"HostPort\":\"5671\"}],\"8883/tcp\":[{\"HostPort\":\"8883\"}],\"443/tcp\":[{\"HostPort\":\"443\"}]}}}"
             }
           }
@@ -36,7 +36,7 @@
             "status": "running",
             "restartPolicy": "always",
             "settings": {
-              "image": "glovebox/camera-capture-opencv:1.1.90-amd64",
+              "image": "localhost:5000/camera-capture-opencv:1.1.96-amd64",
               "createOptions": "{\"Env\":[\"Video=0\",\"azureSpeechServicesKey=2f57f2d9f1074faaa0e9484e1f1c08c1\",\"AiEndpoint=http://image-classifier-service:80/image\"],\"HostConfig\":{\"PortBindings\":{\"5678/tcp\":[{\"HostPort\":\"5678\"}]},\"Devices\":[{\"PathOnHost\":\"/dev/video0\",\"PathInContainer\":\"/dev/video0\",\"CgroupPermissions\":\"mrw\"},{\"PathOnHost\":\"/dev/snd\",\"PathInContainer\":\"/dev/snd\",\"CgroupPermissions\":\"mrw\"}]}}"
             }
           },
@@ -46,7 +46,7 @@
             "status": "running",
             "restartPolicy": "always",
             "settings": {
-              "image": "glovebox/image-classifier-service:1.1.90-amd64",
+              "image": "localhost:5000/image-classifier-service:1.1.91-amd64",
               "createOptions": "{\"HostConfig\":{\"Binds\":[\"/home/pi/images:/images\"],\"PortBindings\":{\"8000/tcp\":[{\"HostPort\":\"80\"}],\"5679/tcp\":[{\"HostPort\":\"5679\"}]}}}"
             }
           }

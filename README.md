@@ -10,11 +10,9 @@
 |Programming Language| Python|
 |Date|As at April 2019|
 
+![raspberry pi 3a azure iot edge](https://github.com/gloveboxes/Creating-an-image-recognition-solution-with-Azure-IoT-Edge-and-Azure-Cognitive-Services/raw/master/docs/raspberry-pi-3a-image-classifier.png)
 
 **Raspberry Pi 3A+ running Azure IoT Edge Image Classifier**
-
-![](https://github.com/gloveboxes/Creating-an-image-recognition-solution-with-Azure-IoT-Edge-and-Azure-Cognitive-Services/raw/master/docs/raspberry-pi-3a-image-classifier.png)
-
 
 <!-- vscode-markdown-toc -->
 * [Parts Required](#PartsRequired)

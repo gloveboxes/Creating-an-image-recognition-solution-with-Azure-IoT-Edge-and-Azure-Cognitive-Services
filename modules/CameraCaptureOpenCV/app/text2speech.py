@@ -1,11 +1,13 @@
 from azure_text_speech import AzureSpeechServices
 from azure_text_translate import AzureTranslationServices
-from pygame import mixer
 import time
 import hashlib
 from pathlib import Path
 import os
 from datetime import datetime
+import pyaudio
+import wave
+import io
 
 
 class TextToSpeech():
@@ -21,13 +23,37 @@ class TextToSpeech():
         self.enableDiskCache = enableDiskCache
 
         self.ttsAudio = {}
-        mixer.pre_init(frequency=16000, size=-16, channels=1)
 
         self.startSoundTime = datetime.min
         self.soundLength = 0.0
 
         if not Path('.cache-audio').is_dir():
             os.mkdir('.cache-audio')
+
+    def _playAudio(self, audio):
+        CHUNK = 1024
+
+        f = io.BytesIO()
+        f.write(audio)
+        f.seek(0)
+        wf = wave.Wave_read(f)
+
+        p = pyaudio.PyAudio()
+
+        stream = p.open(format=p.get_format_from_width(wf.getsampwidth()),
+                        channels=wf.getnchannels(),
+                        rate=wf.getframerate(),
+                        output=True)
+
+        data = wf.readframes(CHUNK)
+
+        while data != b'':
+            stream.write(data)
+            data = wf.readframes(CHUNK)
+
+        stream.stop_stream()
+        stream.close()
+        p.terminate()
 
     def play(self, text):
         digestKey = hashlib.md5(text.encode()).hexdigest()
@@ -65,21 +91,4 @@ class TextToSpeech():
             if self.enableMemCache:
                 self.ttsAudio[digestKey] = audio
 
-        # retry logic for mixer in situation where another app might have mixer open
-        retry = 0
-        while retry < 8:
-            try:
-                mixer.init()
-                break
-            except:
-                print('mixer init error/retry')
-                time.sleep(1)
-                retry += 1
-        else:
-            return
-
-        self.sound = mixer.Sound(audio)
-        self.sound.play()
-        time.sleep(self.sound.get_length())
-
-        mixer.quit()
+        self._playAudio(audio)
