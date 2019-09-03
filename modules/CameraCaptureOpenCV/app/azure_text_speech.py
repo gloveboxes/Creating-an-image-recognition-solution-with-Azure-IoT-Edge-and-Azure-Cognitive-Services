@@ -28,51 +28,71 @@ class AzureSpeechServices(object):
         If time is less than 10 minutes then use the cached token
         '''
 
+        try:
+            if self.subscription_key is None:
+                return
+
+            if abs(time.time() - self.access_token_ttl) < 10 * 60:
+                return
+
+            fetch_token_url = TOKEN_URL
+            headers = {
+                'Ocp-Apim-Subscription-Key': self.subscription_key
+            }
+            response = requests.post(fetch_token_url, headers=headers)
+            self.access_token = str(response.text)
+            self.access_token_ttl = time.time()
+        except:
+            self.access_token = None
+
+    def get_voice_list(self):
         if self.subscription_key is None:
             return
 
-        # for safety get new token if older than 9 minutes
-        if abs(time.time() - self.access_token_ttl) < 9 * 60:
-            return
+        self.get_token()
 
-        fetch_token_url = TOKEN_URL
+        if self.access_token is None:
+            return None
+
+        constructed_url = BASE_URL + VOICES_PATH
         headers = {
-            'Ocp-Apim-Subscription-Key': self.subscription_key
+            'Authorization': 'Bearer ' + self.access_token
         }
-        response = requests.post(fetch_token_url, headers=headers)
-        self.access_token = str(response.text)
-        self.access_token_ttl = time.time()
+
+        response = requests.get(constructed_url, headers=headers)
+        if response.status_code == 200:
+            return response.content
+        return None
 
     def get_audio(self, text):
         if self.subscription_key is None:
             return
+            
+        self.get_token()
 
-        try:
-            self.get_token()
+        if self.access_token is None:
+            return None
 
-            constructed_url = BASE_URL + TEXT_TO_SPEECH_PATH
-            headers = {
-                'Authorization': 'Bearer ' + self.access_token,
-                'Content-Type': 'application/ssml+xml',
-                'X-Microsoft-OutputFormat': 'riff-16khz-16bit-mono-pcm',
-                'User-Agent': 'YOUR_RESOURCE_NAME'
-            }
-            xml_body = ElementTree.Element('speak', version='1.0')
-            xml_body.set('{http://www.w3.org/XML/1998/namespace}lang', 'en-us')
-            voice = ElementTree.SubElement(xml_body, 'voice')
-            voice.set('{http://www.w3.org/XML/1998/namespace}lang', 'en-US')
-            voice.set('name', self.short_voice_name)
-            voice.text = text
-            body = ElementTree.tostring(xml_body)
+        constructed_url = BASE_URL + TEXT_TO_SPEECH_PATH
+        headers = {
+            'Authorization': 'Bearer ' + self.access_token,
+            'Content-Type': 'application/ssml+xml',
+            'X-Microsoft-OutputFormat': 'riff-16khz-16bit-mono-pcm',
+            'User-Agent': 'YOUR_RESOURCE_NAME'
+        }
+        xml_body = ElementTree.Element('speak', version='1.0')
+        xml_body.set('{http://www.w3.org/XML/1998/namespace}lang', 'en-us')
+        voice = ElementTree.SubElement(xml_body, 'voice')
+        voice.set('{http://www.w3.org/XML/1998/namespace}lang', 'en-US')
+        voice.set('name', self.short_voice_name)
+        voice.text = text
+        body = ElementTree.tostring(xml_body)
 
-            response = requests.post(
-                constructed_url, headers=headers, data=body)
+        response = requests.post(constructed_url, headers=headers, data=body)
 
-            if response.status_code == 200:
-                return response.content
-            else:
-                print("\nStatus code: " + str(response.status_code) +
-                      "\nSomething went wrong. Check your subscription key and headers.\n")
-                return None
-        except:
+        if response.status_code == 200:
+            return response.content
+        else:
+            print("\nStatus code: " + str(response.status_code) +
+                  "\nSomething went wrong. Check your subscription key and headers.\n")
             return None
