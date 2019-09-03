@@ -2,9 +2,9 @@
   "$schema-version": "0.0.1",
   "description": "",
   "image": {
-    "repository": "glovebox/image-classifier-service",
+    "repository": "localhost:5000/image-classifier-service",
     "tag": {
-      "version": "1.1.91",
+      "version": "1.1.111",
       "platforms": {
         "amd64": "./Dockerfile.amd64",
         "amd64.debug": "./Dockerfile.amd64.debug",

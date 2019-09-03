@@ -33,4 +33,4 @@ EXPOSE 5678
 
 RUN [ "cross-build-end" ]
 
-ENTRYPOINT [ "python3", "main.py" ]
+ENTRYPOINT [ "python3", "iotedge_camera.py" ]

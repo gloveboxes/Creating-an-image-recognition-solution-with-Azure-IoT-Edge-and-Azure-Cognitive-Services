@@ -1,25 +1,24 @@
 # To make python 2 and python 3 compatible code
-from __future__ import division
-from __future__ import absolute_import
+# from __future__ import division
+# from __future__ import absolute_import
 
 # Imports
+import text2speech
+from VideoStream import VideoStream
+# import VideoStream
+import os.path
+import base64
+import time
+import json
+import requests
+import numpy
 import sys
 if sys.version_info[0] < 3:  # e.g python version <3
     import cv2
 else:
     import cv2
     from cv2 import cv2
-import numpy
-import requests
-import json
-import time
-import base64
-import time
-import os.path
 
-import VideoStream
-from VideoStream import VideoStream
-import text2speech
 
 maxRetry = 5
 lastTagSpoken = ''
@@ -35,22 +34,31 @@ class CameraCapture(object):
         except ValueError:
             return False
 
+    def __localize_text(self, key):
+        value = None
+        if self.speech_map is not None:
+            result = list(
+                filter(lambda text: text['key'] == key, self.speech_map))
+            if len(result) > 0:
+                value = result[0]['value']
+        return value
+
     def __init__(
             self,
             videoPath,
             azureSpeechServiceKey,
             predictThreshold,
             imageProcessingEndpoint,
-            sendToHubCallback
+            sendToHubCallback,
+            speechMapFileName
     ):
         self.videoPath = videoPath
-        self.tts = text2speech.TextToSpeech(
-            azureSpeechServiceKey, enableMemCache=True, enableDiskCache=True, voice='en-AU-Catherine')
+
         self.predictThreshold = predictThreshold
         self.imageProcessingEndpoint = imageProcessingEndpoint
         self.imageProcessingParams = ""
         self.sendToHubCallback = sendToHubCallback
-        self.tts.play('Starting scanner')
+
 
         if self.__IsInt(videoPath):
             # case of a usb camera (usually mounted at /dev/video* where * is an int)
@@ -58,17 +66,23 @@ class CameraCapture(object):
 
         self.vs = None
 
-        self.localized = {
-            "Granny Smith":"녹색 사과 스캔",
-            "banana":"바나나 스캔",
-            "Red Apple":"빨간 사과 스캔",
-            "orange":"오렌지 스캔"
-            }
+        self.speech_map = None
+        self.speech_voice = 'en-US-GuyNeural'
 
+        self.speech_map_filename = speechMapFileName
 
-        # if os.path.isfile("localize.json"):
-        #     with open("localize.json") as f:
-        #         self.localized  = json.load(f)
+        if speechMapFileName is not None and os.path.isfile(self.speech_map_filename):
+            with open(self.speech_map_filename, encoding='utf-8') as f:
+                json_data = json.load(f)
+                self.speech_voice = json_data.get('voice')
+                self.speech_map = json_data.get('map')
+
+        self.tts = text2speech.TextToSpeech(
+            azureSpeechServiceKey, enableMemCache=True, enableDiskCache=True, voice=self.speech_voice)
+        
+        text = self.__localize_text('Starting scanner')
+        self.tts.play('Starting scanner' if text is None else text)
+
 
     def __buildSentence(self, tag):
         vowels = ('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U')
@@ -117,13 +131,9 @@ class CameraCapture(object):
         if probability > self.predictThreshold and sortResponse['tagName'] != lastTagSpoken:
             lastTagSpoken = sortResponse['tagName']
             print('text to speech ' + lastTagSpoken)
-            self.tts.play(self.__buildSentence(lastTagSpoken))
-            # localized_text = self.localized.get(lastTagSpoken, None)
-            # if localized_text is None:
-            #     pass
-            #     # self.tts.play(self.__buildSentence(sortResponse['tagName']))
-            # else:
-            #     self.tts.play(localized_text)
+
+            text = self.__localize_text(lastTagSpoken)
+            self.tts.play(self.__buildSentence(lastTagSpoken) if text is None else text)
 
             return json.dumps(predictions)
         else:

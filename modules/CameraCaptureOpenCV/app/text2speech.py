@@ -56,6 +56,9 @@ class TextToSpeech():
         p.terminate()
 
     def play(self, text):
+        if text is None or text == '':
+            return
+
         digestKey = hashlib.md5(text.encode()).hexdigest()
 
         audio = self.ttsAudio.get(digestKey) if self.enableMemCache else None

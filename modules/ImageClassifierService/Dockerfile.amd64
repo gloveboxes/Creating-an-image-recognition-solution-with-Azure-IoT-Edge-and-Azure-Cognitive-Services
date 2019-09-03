@@ -19,4 +19,4 @@ ADD app /app
 WORKDIR /app
 
 # Run the flask server for the endpoints
-CMD python -u app.py
+CMD python -u iotedge_model.py

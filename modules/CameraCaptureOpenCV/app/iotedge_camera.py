@@ -73,7 +73,8 @@ def main(
         videoPath,
         bingSpeechKey,
         predictThreshold,
-        imageProcessingEndpoint=""
+        imageProcessingEndpoint="",
+        speechMapFileName = None
 ):
     '''
     Capture a camera feed, send it to processing and forward outputs to EdgeHub
@@ -92,7 +93,7 @@ def main(
         except IoTHubError as iothub_error:
             print("Unexpected error %s from IoTHub" % iothub_error)
             return
-        with CameraCapture(videoPath, bingSpeechKey, predictThreshold, imageProcessingEndpoint, send_to_Hub_callback) as cameraCapture:
+        with CameraCapture(videoPath, bingSpeechKey, predictThreshold, imageProcessingEndpoint, send_to_Hub_callback, speechMapFileName) as cameraCapture:
             cameraCapture.start()
     except KeyboardInterrupt:
         print("Camera capture module stopped")
@@ -113,6 +114,7 @@ if __name__ == '__main__':
         PREDICT_THRESHOLD = os.getenv('Threshold', .75)
         IMAGE_PROCESSING_ENDPOINT = os.getenv('AiEndpoint')
         AZURE_SPEECH_SERVICES_KEY = os.getenv('azureSpeechServicesKey', None)
+        SPEECH_MAP_FILENAME = os.getenv('speechmapfilename', None)
 
         print(os.getenv('IOTEDGE_AUTHSCHEME'))
 
@@ -121,4 +123,4 @@ if __name__ == '__main__':
         sys.exit(1)
 
     main(VIDEO_PATH, AZURE_SPEECH_SERVICES_KEY,
-         PREDICT_THRESHOLD, IMAGE_PROCESSING_ENDPOINT)
+         PREDICT_THRESHOLD, IMAGE_PROCESSING_ENDPOINT, SPEECH_MAP_FILENAME)

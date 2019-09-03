@@ -1,0 +1,25 @@
+{
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "map": [
+        {
+            "key": "Green Apple",
+            "value": "你扫描了一个青苹果"
+        },
+        {
+            "key": "Red Apple",
+            "value": "你扫描了一个红苹果"
+        },
+        {
+            "key": "Orange",
+            "value": "你扫描了一个橘子"
+        },
+        {
+            "key": "Banana",
+            "value": "你扫描了一根香蕉"
+        },
+        {
+            "key": "Starting scanner",
+            "value": "启动扫描仪"
+        }
+    ]
+}

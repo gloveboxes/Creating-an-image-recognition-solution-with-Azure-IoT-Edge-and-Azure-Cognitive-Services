@@ -1,0 +1,25 @@
+{
+    "voice": "ko-KR-HeamiRUS",
+    "map": [
+        {
+            "key": "Green Apple",
+            "value": "녹색 사과 스캔"
+        },
+        {
+            "key": "Red Apple",
+            "value": "빨간 사과 스캔"
+        },
+        {
+            "key": "Orange",
+            "value": "오렌지 스캔"
+        },
+        {
+            "key": "Banana",
+            "value": "바나나 스캔"
+        },
+        {
+            "key": "Starting scanner",
+            "value": "스캐너를 시작합니다"
+        }
+    ]
+}
