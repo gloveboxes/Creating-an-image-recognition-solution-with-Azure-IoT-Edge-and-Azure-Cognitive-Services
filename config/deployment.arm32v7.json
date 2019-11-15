@@ -36,8 +36,8 @@
             "status": "running",
             "restartPolicy": "always",
             "settings": {
-              "image": "glovebox/camera-capture-opencv:1.1.111-arm32v7",
-              "createOptions": "{\"Env\":[\"Video=0\",\"azureSpeechServicesKey=2f57f2d9f1074faaa0e9484e1f1c08c1\",\"AiEndpoint=http://image-classifier-service:80/image\"],\"HostConfig\":{\"PortBindings\":{\"5678/tcp\":[{\"HostPort\":\"5678\"}]},\"Devices\":[{\"PathOnHost\":\"/dev/video0\",\"PathInContainer\":\"/dev/video0\",\"CgroupPermissions\":\"mrw\"},{\"PathOnHost\":\"/dev/snd\",\"PathInContainer\":\"/dev/snd\",\"CgroupPermissions\":\"mrw\"}]}}"
+              "image": "glovebox/camera-capture-opencv:1.1.128-arm32v7",
+              "createOptions": "{\"Env\":[\"Video=0\",\"azureSpeechServicesKey=2f57f2d9f1074faaa0e9484e1f1c08c1\",\"AiEndpoint=http://image-classifier-service:80/image\",\"SpeechMapFilename=speech_map_australian.json\"],\"HostConfig\":{\"PortBindings\":{\"5678/tcp\":[{\"HostPort\":\"5678\"}]},\"Devices\":[{\"PathOnHost\":\"/dev/video0\",\"PathInContainer\":\"/dev/video0\",\"CgroupPermissions\":\"mrw\"},{\"PathOnHost\":\"/dev/snd\",\"PathInContainer\":\"/dev/snd\",\"CgroupPermissions\":\"mrw\"}]}}"
             }
           },
           "image-classifier-service": {

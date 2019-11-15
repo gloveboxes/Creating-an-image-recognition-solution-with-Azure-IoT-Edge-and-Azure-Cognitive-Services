@@ -114,7 +114,7 @@ if __name__ == '__main__':
         PREDICT_THRESHOLD = os.getenv('Threshold', .75)
         IMAGE_PROCESSING_ENDPOINT = os.getenv('AiEndpoint')
         AZURE_SPEECH_SERVICES_KEY = os.getenv('azureSpeechServicesKey', None)
-        SPEECH_MAP_FILENAME = os.getenv('speechmapfilename', None)
+        SPEECH_MAP_FILENAME = os.getenv('SpeechMapFilename', None)
 
         print(os.getenv('IOTEDGE_AUTHSCHEME'))
 

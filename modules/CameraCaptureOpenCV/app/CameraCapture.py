@@ -67,7 +67,7 @@ class CameraCapture(object):
         self.vs = None
 
         self.speech_map = None
-        self.speech_voice = 'en-US-GuyNeural'
+        self.speech_voice = 'en-AU-Catherine'
 
         self.speech_map_filename = speechMapFileName
 
