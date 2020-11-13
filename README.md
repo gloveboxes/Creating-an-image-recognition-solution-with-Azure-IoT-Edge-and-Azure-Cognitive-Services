@@ -1,12 +1,12 @@
 
 
-|Author|[Dave Glover](https://developer.microsoft.com/en-us/advocates/dave-glover), Microsoft Cloud Developer Advocate |
+|Author|[Dave Glover](https://developer.microsoft.com/advocates/dave-glover?WT.mc_id=iot-0000-dglover), Microsoft Cloud Developer Advocate |
 |----|---|
 |Solution| [Creating an image recognition solution with Azure IoT Edge and Azure Cognitive Services](https://github.com/gloveboxes/Creating-an-image-recognition-solution-with-Azure-IoT-Edge-and-Azure-Cognitive-Services)|
 |Documentation|[README](https://gloveboxes.github.io/Creating-an-image-recognition-solution-with-Azure-IoT-Edge-and-Azure-Cognitive-Services/) |
-|Platform| [Azure IoT Edge](https://docs.microsoft.com/en-us/azure/iot-edge/?WT.mc_id=devto-blog-dglover)|
-|Documentation | [Azure IoT Edge](https://docs.microsoft.com/en-us/azure/iot-edge/?WT.mc_id=devto-blog-dglover), [Azure Custom Vision](https://docs.microsoft.com/en-us/azure/cognitive-services/custom-vision-service/getting-started-build-a-classifier/?WT.mc_id=devto-blog-dglover), [Azure Speech Services](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/overview/?WT.mc_id=devto-blog-dglover),  [Azure Functions on Edge](https://docs.microsoft.com/en-us/azure/iot-edge/tutorial-deploy-function/?WT.mc_id=devto-blog-dglover), [Azure Stream Analytics](https://docs.microsoft.com/en-us/azure/iot-edge/tutorial-deploy-stream-analytics/?WT.mc_id=devto-blog-dglover), [Azure Machine Learning Services](https://docs.microsoft.com/en-us/azure/iot-edge/tutorial-deploy-machine-learning/?WT.mc_id=devto-blog-dglover) |
-|Video Training|[Enable edge intelligence with Azure IoT Edge](https://channel9.msdn.com/events/Connect/2017/T253)|
+|Platform| [Azure IoT Edge](https://docs.microsoft.com/azure/iot-edge/?WT.mc_id=iot-0000-dglover)|
+|Documentation | [Azure IoT Edge](https://docs.microsoft.com/azure/iot-edge/?WT.mc_id=iot-0000-dglover), [Azure Custom Vision](https://docs.microsoft.com/azure/cognitive-services/custom-vision-service/getting-started-build-a-classifier/?WT.mc_id=iot-0000-dglover), [Azure Speech Services](https://docs.microsoft.com/azure/cognitive-services/speech-service/overview/?WT.mc_id=iot-0000-dglover),  [Azure Functions on Edge](https://docs.microsoft.com/azure/iot-edge/tutorial-deploy-function/?WT.mc_id=iot-0000-dglover), [Azure Stream Analytics](https://docs.microsoft.com/azure/iot-edge/tutorial-deploy-stream-analytics/?WT.mc_id=iot-0000-dglover), [Azure Machine Learning Services](https://docs.microsoft.com/azure/iot-edge/tutorial-deploy-machine-learning/?WT.mc_id=iot-0000-dglover) |
+|Video Training|[Enable edge intelligence with Azure IoT Edge](https://channel9.msdn.com/events/Connect/2017/T253?WT.mc_id=iot-0000-dglover)|
 |Programming Language| Python|
 |Date|As at April 2019|
 
@@ -53,11 +53,11 @@ If you do not want to download and build the solution you can use the prebuilt A
 
 
 1. Set up [Raspbian Stretch Lite](https://learn.pimoroni.com/tutorial/sandyj/setting-up-a-headless-pi) on Raspberry Pi. Be sure to configure the correct [Country Code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements) in your **wpa_supplicant.conf** file.
-2. If you don't already have an Azure account then sign up for a [free Azure account](https://azure.microsoft.com/en-au/free/?WT.mc_id=devto-blog-dglover). If you are a student then sign up for an [Azure for Students](https://azure.microsoft.com/en-au/free/students/?WT.mc_id=devto-blog-dglover) account, no credit card required.
-3. [Follow these instructions](https://docs.microsoft.com/en-us/azure/iot-edge/how-to-register-device-portal/?WT.mc_id=devto-blog-dglover) to create an Azure IoT Hub, and an Azure IoT Edge device.
-1. [Install Azure IoT Edge runtime on Raspberry Pi](https://docs.microsoft.com/en-us/azure/iot-edge/how-to-install-iot-edge-linux-arm/?WT.mc_id=devto-blog-dglover)
+2. If you don't already have an Azure account then sign up for a [free Azure account](https://azure.microsoft.com/free/?WT.mc_id=iot-0000-dglover). If you are a student then sign up for an [Azure for Students](https://azure.microsoft.com/free/students/?WT.mc_id=iot-0000-dglover) account, no credit card required.
+3. [Follow these instructions](https://docs.microsoft.com/azure/iot-edge/how-to-register-device-portal/?WT.mc_id=iot-0000-dglover) to create an Azure IoT Hub, and an Azure IoT Edge device.
+1. [Install Azure IoT Edge runtime on Raspberry Pi](https://docs.microsoft.com/azure/iot-edge/how-to-install-iot-edge-linux-arm/?WT.mc_id=iot-0000-dglover)
 1. Download the deployment configuration file that describes the Azure IoT Edge Modules and Routes for this solution. Open the [deployment.arm32v7.json](https://raw.githubusercontent.com/gloveboxes/Creating-an-image-recognition-solution-with-Azure-IoT-Edge-and-Azure-Cognitive-Services/master/config/deployment.arm32v7.json) link and save the deployment.arm32v7.json in a known location on your computer.
-1. Install the [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli/?WT.mc_id=devto-blog-dglover) and the [IoT extension for Azure CLI](https://github.com/Azure/azure-iot-cli-extension) command line tools. For more information, see [Deploy Azure IoT Edge modules with Azure CLI](https://docs.microsoft.com/en-us/azure/iot-edge/how-to-deploy-modules-cli/?WT.mc_id=devto-blog-dglover)
+1. Install the [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli/?WT.mc_id=iot-0000-dglover) and the [IoT extension for Azure CLI](https://github.com/Azure/azure-iot-cli-extension) command line tools. For more information, see [Deploy Azure IoT Edge modules with Azure CLI](https://docs.microsoft.com/azure/iot-edge/how-to-deploy-modules-cli/?WT.mc_id=iot-0000-dglover)
 1. Open a command line console/terminal and change directory to the location where you saved the deployment.arm32v7.json file.
 1. Finally, from the command line run the following command, be sure to substitute [device id] and the [hub name] values.
 
@@ -94,13 +94,13 @@ The solution runs on [Azure IoT Edge](#2-what-is-azure-iot-edge) and consists of
 
 # What is Azure IoT Edge
 
-The solution is built on [Azure IoT Edge](https://docs.microsoft.com/en-us/azure/iot-edge/?WT.mc_id=devto-blog-dglover) which is part of the Azure IoT Hub service and is used to define, secure and deploy a solution to an edge device. It also provides cloud-based central monitoring and reporting of the edge device.
+The solution is built on [Azure IoT Edge](https://docs.microsoft.com/azure/iot-edge/?WT.mc_id=iot-0000-dglover) which is part of the Azure IoT Hub service and is used to define, secure and deploy a solution to an edge device. It also provides cloud-based central monitoring and reporting of the edge device.
 
 The main components for an IoT Edge solution are:-
 
-1. The [IoT Edge Runtime](https://docs.microsoft.com/en-us/azure/iot-edge/iot-edge-runtime/?WT.mc_id=devto-blog-dglover) which is installed on the local edge device and consists of two main components. The **IoT Edge "hub"**, responsible for communications, and the **IoT Edge "agent"**, responsible for running and monitoring modules on the edge device.
+1. The [IoT Edge Runtime](https://docs.microsoft.com/azure/iot-edge/iot-edge-runtime/?WT.mc_id=iot-0000-dglover) which is installed on the local edge device and consists of two main components. The **IoT Edge "hub"**, responsible for communications, and the **IoT Edge "agent"**, responsible for running and monitoring modules on the edge device.
 
-2. [Modules](https://docs.microsoft.com/en-us/azure/iot-edge/iot-edge-modules/?WT.mc_id=devto-blog-dglover). Modules are the unit of deployment. Modules are docker images pulled from a registry such as the [Azure Container Registry](https://azure.microsoft.com/en-au/services/container-registry/), or [Docker Hub](https://hub.docker.com/). Modules can be custom developed, built as [Azure Functions](https://docs.microsoft.com/en-us/azure/iot-edge/tutorial-deploy-function/?WT.mc_id=devto-blog-dglover), or as exported services from [Azure Custom Vision](https://docs.microsoft.com/en-us/azure/iot-edge/tutorial-deploy-stream-analytics/?WT.mc_id=devto-blog-dglover), [Azure Machine Learning](https://docs.microsoft.com/en-us/azure/iot-edge/tutorial-deploy-machine-learning/?WT.mc_id=devto-blog-dglover), or [Azure Stream Analytics](https://docs.microsoft.com/en-us/azure/iot-edge/tutorial-deploy-stream-analytics/?WT.mc_id=devto-blog-dglover).
+2. [Modules](https://docs.microsoft.com/azure/iot-edge/iot-edge-modules/?WT.mc_id=iot-0000-dglover). Modules are the unit of deployment. Modules are docker images pulled from a registry such as the [Azure Container Registry](https://azure.microsoft.com/services/container-registry/?WT.mc_id=iot-0000-dglover), or [Docker Hub](https://hub.docker.com/). Modules can be custom developed, built as [Azure Functions](https://docs.microsoft.com/azure/iot-edge/tutorial-deploy-function/?WT.mc_id=iot-0000-dglover), or as exported services from [Azure Custom Vision](https://docs.microsoft.com/azure/iot-edge/tutorial-deploy-stream-analytics/?WT.mc_id=iot-0000-dglover), [Azure Machine Learning](https://docs.microsoft.com/azure/iot-edge/tutorial-deploy-machine-learning/?WT.mc_id=iot-0000-dglover), or [Azure Stream Analytics](https://docs.microsoft.com/azure/iot-edge/tutorial-deploy-stream-analytics/?WT.mc_id=iot-0000-dglover).
 
 3. Routes. Routes define message paths between modules and with Azure IoT Hub.
 
@@ -108,7 +108,7 @@ The main components for an IoT Edge solution are:-
 
 5. Create Options. Create Options tell the Docker runtime what options to start the module with. For example, you may wish to open ports for REST APIs or debugging ports, define paths to devices such as a USB Camera, set environment variables, or enable privilege mode for certain hardware operations. For more information see the [Docker API](https://docs.docker.com/engine/api/latest/) documentation.
 
-6. [Deployment Manifest](https://docs.microsoft.com/en-us/azure/iot-edge/module-composition/?WT.mc_id=devto-blog-dglover). The Deployment Manifest pulls everything together and tells the Azure IoT Edge runtime what modules to deploy, from where, plus what message routes to set up, and what create options to start each module with.
+6. [Deployment Manifest](https://docs.microsoft.com/azure/iot-edge/module-composition/?WT.mc_id=iot-0000-dglover). The Deployment Manifest pulls everything together and tells the Azure IoT Edge runtime what modules to deploy, from where, plus what message routes to set up, and what create options to start each module with.
 
 ## <a name='AzureIoTEdgeinAction'></a>Azure IoT Edge in Action
 
@@ -134,13 +134,13 @@ So, with that overview of Azure IoT Edge here were my considerations and constra
 
 ## <a name='CreatingtheFruitClassificationModel'></a>Creating the Fruit Classification Model
 
-The [Azure Custom Vision](https://docs.microsoft.com/en-us/azure/cognitive-services/custom-vision-service/?WT.mc_id=devto-blog-dglover) service is a simple way to create an image classification machine learning model without having to be a data science or machine learning expert. You simply upload multiple collections of labelled images. For example, you could upload a collection of banana images and label them as 'banana'.
+The [Azure Custom Vision](https://docs.microsoft.com/azure/cognitive-services/custom-vision-service/?WT.mc_id=iot-0000-dglover) service is a simple way to create an image classification machine learning model without having to be a data science or machine learning expert. You simply upload multiple collections of labelled images. For example, you could upload a collection of banana images and label them as 'banana'.
 
-To create your own classification model read [How to build a classifier with Custom Vision](https://docs.microsoft.com/en-us/azure/cognitive-services/custom-vision-service/getting-started-build-a-classifier/?WT.mc_id=devto-blog-dglover) for more information. It is important to have a good variety of labelled images so be sure to read [How to improve your classifier](https://docs.microsoft.com/en-us/azure/cognitive-services/custom-vision-service/getting-started-improving-your-classifier/?WT.mc_id=devto-blog-dglover).
+To create your own classification model read [How to build a classifier with Custom Vision](https://docs.microsoft.com/azure/cognitive-services/custom-vision-service/getting-started-build-a-classifier/?WT.mc_id=iot-0000-dglover) for more information. It is important to have a good variety of labelled images so be sure to read [How to improve your classifier](https://docs.microsoft.com/azure/cognitive-services/custom-vision-service/getting-started-improving-your-classifier/?WT.mc_id=iot-0000-dglover).
 
 ## <a name='ExportinganAzureCustomVisionModel'></a>Exporting an Azure Custom Vision Model
 
-This "Image Classification" module includes a simple fruit classification model that was exported from Azure Custom Vision. For more information read how to [Export your model for use with mobile devices](https://docs.microsoft.com/en-us/azure/cognitive-services/custom-vision-service/export-your-model/?WT.mc_id=devto-blog-dglover). It is important to select one of the "**compact**" domains from the project settings page otherwise you will not be able to export the model.
+This "Image Classification" module includes a simple fruit classification model that was exported from Azure Custom Vision. For more information read how to [Export your model for use with mobile devices](https://docs.microsoft.com/azure/cognitive-services/custom-vision-service/export-your-model/?WT.mc_id=iot-0000-dglover). It is important to select one of the "**compact**" domains from the project settings page otherwise you will not be able to export the model.
 
 Follow these steps to export your Custom Vision project model.
 
@@ -160,7 +160,7 @@ Follow these steps to export your Custom Vision project model.
 
 ## <a name='AzureSpeechServices'></a>Azure Speech Services
 
-[Azure Speech Services](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/overview/?WT.mc_id=devto-blog-dglover) supports both "speech to text" and "text to speech". For this solution, I'm using the text to speech (F0) free tier which is limited to 5 million characters per month. You will need to add the Speech service using the Azure Portal and "Grab your key" from the service.
+[Azure Speech Services](https://docs.microsoft.com/azure/cognitive-services/speech-service/overview/?WT.mc_id=iot-0000-dglover) supports both "speech to text" and "text to speech". For this solution, I'm using the text to speech (F0) free tier which is limited to 5 million characters per month. You will need to add the Speech service using the Azure Portal and "Grab your key" from the service.
 
 ![azure speech service](https://github.com/gloveboxes/Creating-an-image-recognition-solution-with-Azure-IoT-Edge-and-Azure-Cognitive-Services/raw/master/docs/speech-service.png)
 
@@ -178,14 +178,14 @@ Open the deployment.template.json file and update the BingKey with the key you c
 
 2. Install the Azure IoT Edge runtime on your Linux desktop or device (eg Raspberry Pi).
 
-    Follow the instructions to [Deploy your first IoT Edge module to a Linux x64 device](https://docs.microsoft.com/en-us/azure/iot-edge/quickstart-linux/?WT.mc_id=devto-blog-dglover).
+    Follow the instructions to [Deploy your first IoT Edge module to a Linux x64 device](https://docs.microsoft.com/azure/iot-edge/quickstart-linux/?WT.mc_id=iot-0000-dglover).
 
 3. Install the following software development tools.
 
-    1. [Visual Studio Code](https://code.visualstudio.com/)
+    1. [Visual Studio Code](https://code.visualstudio.com/?WT.mc_id=iot-0000-dglover)
     2. Plus, the following Visual Studio Code Extensions
-        - [Azure IoT Edge](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-edge)
-        - [JSON Tools](https://marketplace.visualstudio.com/items?itemName=eriklynd.json-tools) useful for changing the "Create Options" for a module.
+        - [Azure IoT Edge](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-edge&WT.mc_id=iot-0000-dglover)
+        - [JSON Tools](https://marketplace.visualstudio.com/items?itemName=eriklynd.json-tools&WT.mc_id=iot-0000-dglover) useful for changing the "Create Options" for a module.
     3. [Docker Community Edition](https://docs.docker.com/install/) on your development machine
 
 4. With Visual Studio Code, open the IoT Edge solution you cloned from GitHub to your developer desktop.
@@ -200,7 +200,7 @@ The following describes the highlighted sections of the project.
 
 3. The deployment.template.json file is used by the build process. It defines what modules to build, what message routes to set up, and what version of the IoT Edge runtime to run.
 
-4. The deployment.json file is generated from the deployment.template.json and is the [Deployment Manifest](https://docs.microsoft.com/en-us/azure/iot-edge/module-composition/?WT.mc_id=devto-blog-dglover)
+4. The deployment.json file is generated from the deployment.template.json and is the [Deployment Manifest](https://docs.microsoft.com/azure/iot-edge/module-composition/?WT.mc_id=iot-0000-dglover)
 
 5. The version.py in the project root folder is a helper app you can run on your development machine that updates the version number of each module. Useful as a change in the version number is what triggers Azure IoT Edge runtime to pull the updated module and it is easy to forget to change the module version numbers:)
 
@@ -247,7 +247,7 @@ iotedge list
 
 ## <a name='MonitoringtheSolutionfromtheAzureIoTEdgeBlade'></a>Monitoring the Solution from the Azure IoT Edge Blade
 
-You can monitor the state of the Azure IoT Edge module from the Azure IoT Hub blade on the [Azure Portal](http://portal.azure.com).
+You can monitor the state of the Azure IoT Edge module from the Azure IoT Hub blade on the [Azure Portal](https://portal.azure.com/?WT.mc_id=iot-0000-dglover).
 
    ![azure iot edge devices](https://github.com/gloveboxes/Creating-an-image-recognition-solution-with-Azure-IoT-Edge-and-Azure-Cognitive-Services/raw/master/docs/azure-iotedge-monitoring.png)
 
